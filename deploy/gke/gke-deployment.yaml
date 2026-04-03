@@ -1,0 +1,84 @@
+# GKE Deployment Configuration
+# This file contains the configuration for deploying the Todo App on Google Kubernetes Engine
+
+---
+# Google-specific configurations
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gke-todo-secrets
+  namespace: todo-prod
+type: Opaque
+data:
+  # Base64 encoded values
+  database-url: <base64-encoded-db-url>
+  kafka-connection: <base64-encoded-kafka-url>
+  dapr-secret: <base64-encoded-dapr-secret>
+
+---
+# Google Cloud Load Balancer for frontend
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-gke-lb
+  namespace: todo-prod
+  annotations:
+    cloud.google.com/load-balancer-type: "External"
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 3000
+    protocol: TCP
+    name: http
+  selector:
+    app: frontend
+
+---
+# Google-specific resource requests and limits
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: gke-resource-limits
+  namespace: todo-prod
+spec:
+  limits:
+  - default:
+      cpu: 500m
+      memory: 512Mi
+    defaultRequest:
+      cpu: 200m
+      memory: 256Mi
+    type: Container
+
+---
+# Google Cloud SQL proxy sidecar for database connection (example)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-proxy
+  namespace: todo-prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database-proxy
+  template:
+    metadata:
+      labels:
+        app: database-proxy
+    spec:
+      containers:
+      - name: cloud-sql-proxy
+        image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:latest
+        # Replace DB_CONNECTION_NAME with your Cloud SQL instance connection name
+        args: ["DB_CONNECTION_NAME", "--port=5432"]
+        ports:
+        - containerPort: 5432
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 100m
+          limits:
+            memory: 256Mi
+            cpu: 200m

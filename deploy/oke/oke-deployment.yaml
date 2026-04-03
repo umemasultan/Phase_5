@@ -1,0 +1,73 @@
+# OKE Deployment Configuration
+# This file contains the configuration for deploying the Todo App on Oracle Kubernetes Engine
+
+---
+# Oracle-specific configurations
+apiVersion: v1
+kind: Secret
+metadata:
+  name: oke-todo-secrets
+  namespace: todo-prod
+type: Opaque
+data:
+  # Base64 encoded values
+  database-url: <base64-encoded-db-url>
+  kafka-connection: <base64-encoded-kafka-url>
+  dapr-secret: <base64-encoded-dapr-secret>
+
+---
+# Oracle Cloud Load Balancer for frontend
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-oke-lb
+  namespace: todo-prod
+  annotations:
+    service.beta.kubernetes.io/oci-load-balancer-internal: "false"
+    service.beta.kubernetes.io/oci-load-balancer-shape: "flexible"
+    service.beta.kubernetes.io/oci-load-balancer-minimum-bandwidth: "10"
+    service.beta.kubernetes.io/oci-load-balancer-maximum-bandwidth: "100"
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 3000
+    protocol: TCP
+    name: http
+  selector:
+    app: frontend
+
+---
+# Oracle-specific resource limits
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: oke-resource-limits
+  namespace: todo-prod
+spec:
+  limits:
+  - default:
+      cpu: 500m
+      memory: 512Mi
+    defaultRequest:
+      cpu: 200m
+      memory: 256Mi
+    type: Container
+
+---
+# Oracle Cloud Infrastructure Block Volume for persistent storage (example)
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: oke-pv
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+  - ReadWriteOnce
+  flexVolume:
+    driver: "oracle/oci"
+    fsType: "ext4"
+    options:
+      volumeID: "ocid1.volume.oc1.phx.abyhqljty3phgdsdasdasdasd"  # Replace with actual OCID
+  persistentVolumeReclaimPolicy: Retain

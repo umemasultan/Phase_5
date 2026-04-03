@@ -1,55 +1,53 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Todo Application Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Event-Driven Microservices
+All services must be event-driven and follow microservice architecture principles. Services communicate via asynchronous events through Dapr PubSub with no tight coupling between services.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Kafka Abstraction via Dapr PubSub
+All messaging must go through Dapr PubSub building block. Zero direct Kafka client usage in business code. Dapr provides the abstraction layer over Kafka.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Infrastructure Access via Dapr
+All infrastructure services accessed via Dapr building blocks. Use Dapr for pubsub, state management, secrets, service invocation. Services remain cloud-agnostic through Dapr abstractions.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Async-First FastAPI
+Backend services use FastAPI with async/await patterns. Non-blocking operations for better throughput. Event-driven responses instead of synchronous requests.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Idempotent Consumers
+All event consumers must be idempotent to handle duplicate events. Safe to process the same event multiple times without side effects. Design for at-least-once delivery semantics.
 
-### [PRINCIPLE_6_NAME]
+### VI. State Management
+Services remain stateless where possible. State managed through Dapr state stores. 12-Factor App compliance for configuration.
 
+### VII. Configuration Management
+All configuration via environment variables. No hardcoded values in source code. Secrets managed through Dapr SecretStore.
 
-[PRINCIPLE__DESCRIPTION]
+## Security
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### Secrets Management
+Secrets must be stored in Kubernetes or Dapr SecretStore. No credentials in repository or source code. Environment-specific secrets handled externally.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### Isolation
+Namespace isolation for different environments. mTLS enforced via Dapr for service-to-service communication. RBAC enforced for access control.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Reliability
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### Resilience Patterns
+Retries enabled in Dapr for transient failures. Dead-letter topic strategy for failed message handling. Graceful shutdown handling in all services. Health endpoints required for all services.
+
+## Performance
+
+### Event Processing
+No synchronous reminder logic in business services. No polling for reminders - use Dapr Jobs API for exact scheduling. Non-blocking event processing patterns.
+
+## Observability
+
+### Logging and Monitoring
+Structured JSON logging in all services. Correlation IDs maintained per request across services. Readiness and Liveness probes required for Kubernetes. Metrics-ready architecture with standard observability patterns.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+Constitution supersedes all other practices. All PRs and reviews must verify compliance with these principles. Complexity must be justified against business requirements. Use CLAUDE.md for runtime development guidance.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-03-05 | **Last Amended**: 2026-04-02

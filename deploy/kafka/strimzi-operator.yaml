@@ -1,0 +1,12 @@
+# Strimzi Kafka Operator Installation
+# [Task]: T-001
+# [From]: speckit.specify - Event-driven architecture requirement
+# [From]: speckit.plan - Kafka Options - Local: Strimzi
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kafka
+---
+# Install Strimzi Operator using kubectl
+# kubectl create -f 'https://strimzi.io/install/latest?namespace=kafka' -n kafka

@@ -1,0 +1,721 @@
+/* ===================================
+   BOX CONTENT COLOR FIXES
+   =================================== */
+
+/* Ensure all box content has proper text color */
+.box-content,
+.card-content,
+[class*="box-"],
+[class*="card-"] {
+  color: inherit;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark Mode Box Content Colors */
+.dark-mode .box-content,
+.dark-mode .card-elevated,
+.dark-mode .card-flat,
+.dark-mode .card-outlined {
+  color: #1f2937; /* Dark text on white cards */
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark-mode .box-content:hover,
+.dark-mode .card-elevated:hover,
+.dark-mode .card-flat:hover,
+.dark-mode .card-outlined:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px -10px rgba(33, 15, 55, 0.4);
+}
+
+.dark-mode .box-content h1,
+.dark-mode .box-content h2,
+.dark-mode .box-content h3,
+.dark-mode .box-content h4,
+.dark-mode .box-content h5,
+.dark-mode .box-content h6 {
+  color: #0a0a0a; /* Darker headings */
+  transition: color 200ms ease;
+}
+
+.dark-mode .box-content:hover h1,
+.dark-mode .box-content:hover h2,
+.dark-mode .box-content:hover h3,
+.dark-mode .box-content:hover h4,
+.dark-mode .box-content:hover h5,
+.dark-mode .box-content:hover h6 {
+  color: #17153B; /* Blue-Purple on hover */
+}
+
+.dark-mode .box-content p,
+.dark-mode .box-content span,
+.dark-mode .box-content div {
+  color: #404040; /* Medium dark for body text */
+}
+
+.dark-mode .box-content small,
+.dark-mode .box-content .text-secondary {
+  color: #737373; /* Gray for secondary text */
+}
+
+/* Light Mode Box Content Colors */
+.light-mode .box-content,
+.light-mode .card-elevated,
+.light-mode .card-flat,
+.light-mode .card-outlined {
+  color: #1f2937; /* Dark text on white cards */
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.light-mode .box-content:hover,
+.light-mode .card-elevated:hover,
+.light-mode .card-flat:hover,
+.light-mode .card-outlined:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px -10px rgba(33, 15, 55, 0.4);
+}
+
+.light-mode .box-content h1,
+.light-mode .box-content h2,
+.light-mode .box-content h3,
+.light-mode .box-content h4,
+.light-mode .box-content h5,
+.light-mode .box-content h6 {
+  color: #0a0a0a; /* Black headings */
+  transition: color 200ms ease;
+}
+
+.light-mode .box-content:hover h1,
+.light-mode .box-content:hover h2,
+.light-mode .box-content:hover h3,
+.light-mode .box-content:hover h4,
+.light-mode .box-content:hover h5,
+.light-mode .box-content:hover h6 {
+  color: #17153B; /* Blue-Purple on hover */
+}
+
+.light-mode .box-content p,
+.light-mode .box-content span,
+.light-mode .box-content div {
+  color: #404040; /* Dark gray for body text */
+}
+
+.light-mode .box-content small,
+.light-mode .box-content .text-secondary {
+  color: #737373; /* Gray for secondary text */
+}
+
+/* ===================================
+   CARD TEXT COLORS (FIXED)
+   =================================== */
+
+/* White/Light Cards - Always Dark Text */
+.card-elevated,
+.card-flat,
+.card-outlined,
+.shadow-base,
+.shadow-md,
+.shadow-lg,
+.shadow-xl {
+  background: #ffffff;
+  color: #1f2937;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Universal Box Hover Effects */
+.card-elevated:hover,
+.card-flat:hover,
+.card-outlined:hover,
+.shadow-base:hover,
+.shadow-md:hover,
+.shadow-lg:hover,
+.shadow-xl:hover,
+[class*="box-"]:hover,
+[class*="card-"]:hover,
+.box-content:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 50px -10px rgba(23, 21, 59, 0.4);
+}
+
+/* Heading Hover in All Boxes */
+.card-elevated:hover h1,
+.card-elevated:hover h2,
+.card-elevated:hover h3,
+.card-flat:hover h1,
+.card-flat:hover h2,
+.card-flat:hover h3,
+.card-outlined:hover h1,
+.card-outlined:hover h2,
+.card-outlined:hover h3,
+[class*="box-"]:hover h1,
+[class*="box-"]:hover h2,
+[class*="box-"]:hover h3,
+[class*="box-"]:hover h4,
+[class*="box-"]:hover h5,
+[class*="box-"]:hover h6 {
+  color: #17153B !important;
+  transform: scale(1.02);
+}
+
+.shadow-base:hover {
+  box-shadow: 0 12px 24px -4px rgba(23, 21, 59, 0.2);
+}
+
+.shadow-md:hover {
+  box-shadow: 0 20px 40px -8px rgba(23, 21, 59, 0.3);
+}
+
+.shadow-lg:hover {
+  box-shadow: 0 30px 60px -12px rgba(23, 21, 59, 0.35);
+}
+
+.shadow-xl:hover {
+  box-shadow: 0 40px 80px -16px rgba(23, 21, 59, 0.4);
+}
+
+.card-elevated *,
+.card-flat *,
+.card-outlined * {
+  color: inherit;
+}
+
+/* Card Headings */
+.card-elevated h1,
+.card-elevated h2,
+.card-elevated h3,
+.card-flat h1,
+.card-flat h2,
+.card-flat h3 {
+  color: #0a0a0a !important;
+  font-weight: 800;
+  transition: all 200ms ease;
+}
+
+/* All Box Headings */
+[class*="box-"] h1,
+[class*="box-"] h2,
+[class*="box-"] h3,
+[class*="box-"] h4,
+[class*="box-"] h5,
+[class*="box-"] h6 {
+  color: #0a0a0a !important;
+  font-weight: 800;
+  transition: all 200ms ease;
+}
+
+/* Card Body Text */
+.card-elevated p,
+.card-elevated span,
+.card-elevated div,
+.card-flat p,
+.card-flat span,
+.card-flat div {
+  color: #404040 !important;
+  transition: color 200ms ease;
+}
+
+/* All Box Body Text */
+[class*="box-"] p,
+[class*="box-"] span,
+[class*="box-"] div {
+  color: #404040 !important;
+  transition: color 200ms ease;
+}
+
+/* Card Secondary Text */
+.card-elevated small,
+.card-elevated .text-muted,
+.card-flat small,
+.card-flat .text-muted {
+  color: #737373 !important;
+  transition: color 200ms ease;
+}
+
+/* All Box Secondary Text */
+[class*="box-"] small,
+[class*="box-"] .text-muted,
+[class*="box-"] .text-secondary {
+  color: #737373 !important;
+  transition: color 200ms ease;
+}
+
+/* ===================================
+   STAT CARD TEXT COLORS
+   =================================== */
+
+.stat-card,
+.stats-card,
+[class*="stat-"] {
+  background: #ffffff;
+  color: #1f2937;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-card:hover,
+.stats-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 50px -10px rgba(33, 15, 55, 0.25);
+}
+
+.stat-card .stat-label,
+.stat-card .label {
+  color: #737373 !important;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 200ms ease;
+}
+
+.stat-card:hover .stat-label,
+.stat-card:hover .label {
+  color: #17153B !important;
+}
+
+.stat-card .stat-value,
+.stat-card .value {
+  color: #17153B !important;
+  font-size: 2.5rem;
+  font-weight: 900;
+  transition: transform 200ms ease;
+}
+
+.stat-card:hover .stat-value,
+.stat-card:hover .value {
+  transform: scale(1.05);
+}
+
+.stat-card .stat-description,
+.stat-card .description {
+  color: #737373 !important;
+  font-size: 0.875rem;
+}
+
+/* ===================================
+   TASK CARD TEXT COLORS
+   =================================== */
+
+.task-card,
+[class*="task-"] {
+  background: #ffffff;
+  color: #1f2937;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.task-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px -10px rgba(33, 15, 55, 0.2);
+}
+
+.task-card .task-title,
+.task-card h3 {
+  color: #0a0a0a !important;
+  font-weight: 800;
+  transition: color 200ms ease;
+}
+
+.task-card:hover .task-title,
+.task-card:hover h3 {
+  color: #17153B !important;
+}
+
+.task-card .task-description,
+.task-card p {
+  color: #404040 !important;
+}
+
+.task-card .task-meta,
+.task-card small {
+  color: #737373 !important;
+}
+
+/* ===================================
+   BUTTON TEXT COLORS
+   =================================== */
+
+/* Primary Button - White Text */
+.btn-primary,
+.button-primary,
+[style*="linear-gradient"][style*="#17153B"] {
+  color: #ffffff !important;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary:hover,
+.button-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 50px -10px rgba(33, 15, 55, 0.5);
+  filter: brightness(1.1);
+}
+
+/* Secondary Button - Purple Text */
+.btn-secondary,
+.button-secondary {
+  color: #17153B !important;
+  background: #ffffff;
+  border: 2px solid #17153B;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-secondary:hover,
+.button-secondary:hover {
+  background: #17153B;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px -8px rgba(33, 15, 55, 0.4);
+}
+
+/* Ghost Button - Purple Text */
+.btn-ghost,
+.button-ghost {
+  color: #17153B !important;
+  background: transparent;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-ghost:hover,
+.button-ghost:hover {
+  background: rgba(33, 15, 55, 0.1);
+  transform: translateY(-2px);
+}
+
+/* ===================================
+   INPUT TEXT COLORS
+   =================================== */
+
+input,
+textarea,
+select {
+  color: #1f2937 !important;
+  background: #ffffff;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+  border-color: #17153B;
+  box-shadow: 0 4px 12px -2px rgba(33, 15, 55, 0.1);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #a3a3a3 !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  color: #0a0a0a !important;
+  border-color: #17153B;
+  box-shadow: 0 0 0 3px rgba(33, 15, 55, 0.1);
+  transform: translateY(-1px);
+}
+
+/* ===================================
+   TAG/BADGE TEXT COLORS
+   =================================== */
+
+.tag,
+.badge,
+[class*="tag-"],
+[class*="badge-"] {
+  background: rgba(23, 21, 59, 0.1);
+  color: #17153B !important;
+  font-weight: 700;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tag:hover,
+.badge:hover {
+  background: rgba(23, 21, 59, 0.2);
+  transform: scale(1.05);
+}
+
+/* ===================================
+   PRIORITY BADGE COLORS
+   =================================== */
+
+.priority-high,
+.badge-high {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  transition: all 200ms ease;
+}
+
+.priority-high:hover,
+.badge-high:hover {
+  background: #dc2626 !important;
+  box-shadow: 0 4px 12px -2px rgba(239, 68, 68, 0.4);
+  transform: scale(1.05);
+}
+
+.priority-medium,
+.badge-medium {
+  background: #f59e0b !important;
+  color: #ffffff !important;
+  transition: all 200ms ease;
+}
+
+.priority-medium:hover,
+.badge-medium:hover {
+  background: #d97706 !important;
+  box-shadow: 0 4px 12px -2px rgba(245, 158, 11, 0.4);
+  transform: scale(1.05);
+}
+
+.priority-low,
+.badge-low {
+  background: #10b981 !important;
+  color: #ffffff !important;
+  transition: all 200ms ease;
+}
+
+.priority-low:hover,
+.badge-low:hover {
+  background: #059669 !important;
+  box-shadow: 0 4px 12px -2px rgba(16, 185, 129, 0.4);
+  transform: scale(1.05);
+}
+
+/* ===================================
+   TABLE TEXT COLORS
+   =================================== */
+
+table {
+  color: #1f2937;
+}
+
+thead th {
+  color: #0a0a0a !important;
+  font-weight: 700;
+}
+
+tbody td {
+  color: #404040 !important;
+}
+
+/* ===================================
+   LIST TEXT COLORS
+   =================================== */
+
+ul, ol {
+  color: #404040;
+}
+
+li {
+  color: inherit;
+}
+
+/* ===================================
+   LINK COLORS
+   =================================== */
+
+a {
+  color: #17153B !important;
+  text-decoration: none;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background: #17153B;
+  transition: width 300ms ease;
+}
+
+a:hover {
+  color: #3a1a5c !important;
+  transform: translateX(2px);
+}
+
+a:hover::after {
+  width: 100%;
+}
+
+/* ===================================
+   FORM LABEL COLORS
+   =================================== */
+
+label {
+  color: #404040 !important;
+  font-weight: 600;
+}
+
+/* ===================================
+   ALERT/MESSAGE BOX COLORS
+   =================================== */
+
+.alert,
+.message-box {
+  background: #ffffff;
+  color: #1f2937;
+  border-left: 4px solid #17153B;
+}
+
+.alert-success {
+  border-left-color: #10b981;
+  color: #065f46 !important;
+}
+
+.alert-warning {
+  border-left-color: #f59e0b;
+  color: #92400e !important;
+}
+
+.alert-danger {
+  border-left-color: #ef4444;
+  color: #991b1b !important;
+}
+
+/* ===================================
+   MODAL/DIALOG TEXT COLORS
+   =================================== */
+
+.modal,
+.dialog {
+  background: #ffffff;
+  color: #1f2937;
+}
+
+.modal-header,
+.dialog-header {
+  color: #0a0a0a !important;
+  font-weight: 800;
+}
+
+.modal-body,
+.dialog-body {
+  color: #404040 !important;
+}
+
+/* ===================================
+   DROPDOWN TEXT COLORS
+   =================================== */
+
+.dropdown,
+.dropdown-menu {
+  background: #ffffff;
+  color: #1f2937;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dropdown-item {
+  color: #404040 !important;
+  transition: all 200ms ease;
+}
+
+.dropdown-item:hover {
+  background: #f5f5f5;
+  color: #17153B !important;
+  transform: translateX(4px);
+  padding-left: 20px;
+}
+
+/* ===================================
+   TOOLTIP TEXT COLORS
+   =================================== */
+
+.tooltip {
+  background: #0a0a0a;
+  color: #ffffff !important;
+}
+
+/* ===================================
+   BREADCRUMB TEXT COLORS
+   =================================== */
+
+.breadcrumb {
+  color: #737373;
+}
+
+.breadcrumb-item {
+  color: #737373 !important;
+}
+
+.breadcrumb-item.active {
+  color: #17153B !important;
+  font-weight: 600;
+}
+
+/* ===================================
+   PAGINATION TEXT COLORS
+   =================================== */
+
+.pagination {
+  color: #404040;
+}
+
+.page-item {
+  color: #404040 !important;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-item:hover {
+  color: #17153B !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px -2px rgba(33, 15, 55, 0.2);
+}
+
+.page-item.active {
+  background: #17153B;
+  color: #ffffff !important;
+  box-shadow: 0 8px 20px -4px rgba(33, 15, 55, 0.4);
+}
+
+/* ===================================
+   ENSURE TEXT VISIBILITY
+   =================================== */
+
+/* Force dark text on light backgrounds */
+[style*="background: #fff"],
+[style*="background: #ffffff"],
+[style*="background: rgb(255, 255, 255)"],
+[style*="background: rgba(255, 255, 255"] {
+  color: #1f2937 !important;
+}
+
+/* Force dark text on light gray backgrounds */
+[style*="background: #fafafa"],
+[style*="background: #f5f5f5"],
+[style*="background: #e5e5e5"] {
+  color: #1f2937 !important;
+}
+
+/* Force white text on dark backgrounds */
+[style*="background: #17153B"],
+[style*="background: #2E236C"],
+[style*="background: #0D0B1F"],
+[style*="linear-gradient"][style*="#17153B"] {
+  color: #ffffff !important;
+}
+
+/* ===================================
+   IMPORTANT OVERRIDES
+   =================================== */
+
+/* Ensure headings are always visible */
+h1, h2, h3, h4, h5, h6 {
+  color: #0a0a0a;
+  font-weight: 800;
+}
+
+/* Ensure paragraphs are always visible */
+p {
+  color: #404040;
+}
+
+/* Ensure spans inherit or use default */
+span {
+  color: inherit;
+}
+
+/* Ensure divs inherit color */
+div {
+  color: inherit;
+}
