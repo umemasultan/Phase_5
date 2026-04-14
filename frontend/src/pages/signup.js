@@ -190,7 +190,7 @@ export default function Signup() {
             color: darkMode ? '#ffffff' : '#6b7280',
             fontSize: '16px',
             margin: 0
-          }}>Join TaskMaster Pro today</p>
+          }}>Join TaskMaster Pro Enterprise Edition</p>
         </div>
 
         {error && (

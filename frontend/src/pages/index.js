@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+import Navbar from '../components/Navbar';
 
 export default function Home() {
   const router = useRouter();
@@ -154,126 +155,14 @@ export default function Home() {
         }
       `}</style>
 
-      {/* Navigation */}
-      <nav style={{
-        padding: '20px 0',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: currentTheme.navBg,
-        backdropFilter: 'blur(20px)',
-        borderBottom: `1px solid ${currentTheme.navBorder}`,
-        position: 'sticky',
-        top: 0,
-        zIndex: 10,
-        boxShadow: darkMode ? '0 4px 30px rgba(0, 0, 0, 0.3)' : '0 2px 20px rgba(0, 0, 0, 0.05)'
-      }}>
-        <div style={{
-          width: '100%',
-          maxWidth: '1400px',
-          padding: '0 60px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <div style={{
-            width: '50px',
-            height: '50px',
-            background: `linear-gradient(135deg, ${currentTheme.primary} 0%, ${currentTheme.primaryLight} 100%)`,
-            borderRadius: '16px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '28px',
-            fontWeight: '900',
-            color: 'white',
-            boxShadow: darkMode
-              ? '0 10px 30px rgba(46, 35, 108, 0.5), 0 0 25px rgba(23, 21, 59, 0.4)'
-              : '0 8px 25px rgba(46, 35, 108, 0.35)',
-            position: 'relative',
-            animation: 'float 3s ease-in-out infinite'
-          }}>
-            <span style={{ position: 'relative', zIndex: 1 }}>T</span>
-            <div style={{
-              position: 'absolute',
-              inset: '-3px',
-              background: `linear-gradient(135deg, ${currentTheme.primary}, ${currentTheme.primaryLight})`,
-              borderRadius: '18px',
-              opacity: 0.4,
-              filter: 'blur(10px)',
-              zIndex: 0,
-              animation: 'pulse 2s ease-in-out infinite'
-            }} />
-          </div>
-          <div>
-            <h2 style={{
-              color: darkMode ? 'white' : currentTheme.primary,
-              margin: 0,
-              fontSize: '26px',
-              fontWeight: '800',
-              fontFamily: 'Inter, sans-serif',
-              letterSpacing: '-0.5px'
-            }}>TaskMaster Pro</h2>
-            <p style={{
-              margin: 0,
-              fontSize: '12px',
-              color: darkMode ? 'rgba(255,255,255,0.6)' : 'rgba(33, 15, 55, 0.6)',
-              fontWeight: '500',
-              letterSpacing: '0.5px'
-            }}>ENTERPRISE EDITION</p>
-          </div>
-        </div>
-        <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-          <button onClick={toggleDarkMode} style={{
-            background: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(23, 21, 59, 0.08)',
-            color: darkMode ? 'white' : currentTheme.primary,
-            border: `2px solid ${darkMode ? 'rgba(255, 255, 255, 0.2)' : 'rgba(23, 21, 59, 0.15)'}`,
-            padding: '12px 18px',
-            borderRadius: '12px',
-            fontWeight: '700',
-            cursor: 'pointer',
-            fontSize: '18px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            transition: 'all 0.3s',
-            backdropFilter: 'blur(10px)'
-          }}>
-            {darkMode ? '☀️' : '🌙'}
-          </button>
-          <button onClick={() => router.push('/login')} style={{
-            background: `linear-gradient(135deg, ${currentTheme.primary} 0%, ${currentTheme.primaryLight} 100%)`,
-            color: 'white',
-            border: 'none',
-            padding: '16px 40px',
-            borderRadius: '14px',
-            fontWeight: '800',
-            cursor: 'pointer',
-            fontSize: '16px',
-            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-            boxShadow: darkMode
-              ? '0 10px 30px rgba(99, 102, 241, 0.4)'
-              : '0 8px 25px rgba(99, 102, 241, 0.35)',
-            letterSpacing: '0.3px'
-          }}
-          onMouseEnter={(e) => {
-            e.target.style.transform = 'translateY(-3px)';
-            e.target.style.boxShadow = darkMode
-              ? '0 15px 40px rgba(99, 102, 241, 0.5)'
-              : '0 12px 35px rgba(99, 102, 241, 0.45)';
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.transform = 'translateY(0)';
-            e.target.style.boxShadow = darkMode
-              ? '0 10px 30px rgba(99, 102, 241, 0.4)'
-              : '0 8px 25px rgba(99, 102, 241, 0.35)';
-          }}>
-            Login
-          </button>
-        </div>
-        </div>
-      </nav>
+      <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} showAuthButtons={true} isHomePage={true} />
+
+      <style jsx>{`
+        @keyframes shine {
+          0% { transform: translate(-100%, -100%) rotate(45deg); }
+          100% { transform: translate(100%, 100%) rotate(45deg); }
+        }
+      `}</style>
 
       {/* Hero Section */}
       <main style={{

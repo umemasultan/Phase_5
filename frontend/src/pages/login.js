@@ -163,7 +163,7 @@ export default function Login() {
             color: darkMode ? '#ffffff' : '#6b7280',
             fontSize: '16px',
             margin: 0
-          }}>Login to your TaskMaster Pro account</p>
+          }}>Login to TaskMaster Pro Enterprise Edition</p>
         </div>
 
         {error && (

@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Navbar from '../components/Navbar';
 
 export default function Audit() {
   const router = useRouter();
@@ -39,11 +40,6 @@ export default function Audit() {
     const newMode = !darkMode;
     setDarkMode(newMode);
     localStorage.setItem('darkMode', newMode.toString());
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('currentUser');
-    router.push('/login');
   };
 
   const clearAuditLogs = () => {
@@ -149,112 +145,7 @@ export default function Audit() {
         zIndex: 0
       }} />
 
-      {/* Navigation */}
-      <nav style={{
-        padding: '20px 0',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: currentTheme.navBg,
-        backdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-        position: 'sticky',
-        top: 0,
-        zIndex: 10,
-        boxShadow: darkMode ? '0 4px 30px rgba(0, 0, 0, 0.3)' : '0 2px 20px rgba(0, 0, 0, 0.05)'
-      }}>
-        <div style={{
-          width: '100%',
-          maxWidth: '1400px',
-          padding: '0 60px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '15px', cursor: 'pointer' }} onClick={() => router.push('/')}>
-            <div style={{
-              width: '50px',
-              height: '50px',
-              background: `linear-gradient(135deg, ${currentTheme.primary} 0%, ${currentTheme.primaryLight} 100%)`,
-              borderRadius: '14px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '28px',
-              fontWeight: '900',
-              color: 'white',
-              boxShadow: '0 8px 25px rgba(23, 21, 59, 0.4)'
-            }}>T</div>
-            <div>
-              <h2 style={{ color: currentTheme.navText, margin: 0, fontSize: '24px', fontWeight: '800', letterSpacing: '-0.5px' }}>TaskMaster Pro</h2>
-              <p style={{ margin: 0, fontSize: '11px', color: darkMode ? 'rgba(255,255,255,0.5)' : 'rgba(23, 21, 59, 0.5)', fontWeight: '600', letterSpacing: '0.5px' }}>AUDIT TRAIL</p>
-            </div>
-          </div>
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-            <button onClick={toggleDarkMode} style={{
-              background: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(23, 21, 59, 0.08)',
-              color: currentTheme.navText,
-              border: 'none',
-              padding: '12px 20px',
-              borderRadius: '12px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              backdropFilter: 'blur(10px)',
-              transition: 'all 0.3s',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              fontSize: '14px'
-            }}>
-              <span style={{ fontSize: '20px' }}>{darkMode ? '☀️' : '🌙'}</span>
-              <span>{darkMode ? 'Light' : 'Dark'}</span>
-            </button>
-            <button onClick={() => router.push('/tasks')} style={{
-              background: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(23, 21, 59, 0.08)',
-              color: currentTheme.navText,
-              border: 'none',
-              padding: '12px 24px',
-              borderRadius: '12px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              backdropFilter: 'blur(10px)',
-              transition: 'all 0.3s'
-            }}>Tasks</button>
-            <button onClick={() => router.push('/dashboard')} style={{
-              background: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(23, 21, 59, 0.08)',
-              color: currentTheme.navText,
-              border: 'none',
-              padding: '12px 24px',
-              borderRadius: '12px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              backdropFilter: 'blur(10px)',
-              transition: 'all 0.3s'
-            }}>Dashboard</button>
-            <button onClick={() => router.push('/analytics')} style={{
-              background: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(23, 21, 59, 0.08)',
-              color: currentTheme.navText,
-              border: 'none',
-              padding: '12px 24px',
-              borderRadius: '12px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              backdropFilter: 'blur(10px)',
-              transition: 'all 0.3s'
-            }}>Analytics</button>
-            <button onClick={handleLogout} style={{
-              background: '#fee2e2',
-              color: '#dc2626',
-              border: 'none',
-              padding: '12px 24px',
-              borderRadius: '12px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              transition: 'all 0.3s'
-            }}>Logout</button>
-          </div>
-        </div>
-      </nav>
+      <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} currentUser={currentUser} />
 
       <main style={{
         padding: '60px 0',

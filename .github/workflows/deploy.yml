@@ -256,9 +256,35 @@ jobs:
         version: 'latest'
 
     - name: Deploy to Kubernetes
+      env:
+        KUBECONFIG: ${{ secrets.KUBECONFIG }}
       run: |
-        # This would typically involve setting up kubectl credentials
-        # and running helm upgrade commands
-        echo "Deployment script would go here"
-        # Example:
-        # helm upgrade --install todo-app charts/todo-app --set image.tag=${{ github.sha }}
+        # Install Dapr if not present
+        dapr init -k || true
+
+        # Create namespaces
+        kubectl create namespace todo-prod --dry-run=client -o yaml | kubectl apply -f -
+        kubectl create namespace kafka --dry-run=client -o yaml | kubectl apply -f -
+
+        # Deploy Kafka
+        helm upgrade --install kafka charts/kafka \
+          --namespace kafka \
+          --wait --timeout 10m
+
+        # Deploy Dapr components
+        helm upgrade --install dapr-components charts/dapr-components \
+          --namespace todo-prod \
+          --wait
+
+        # Deploy application
+        helm upgrade --install todo-app charts/todo-app \
+          --namespace todo-prod \
+          --set backend.image.tag=${{ github.sha }} \
+          --set frontend.image.tag=${{ github.sha }} \
+          --set recurring.image.tag=${{ github.sha }} \
+          --set notification.image.tag=${{ github.sha }} \
+          --set audit.image.tag=${{ github.sha }} \
+          --set websocket.image.tag=${{ github.sha }} \
+          --wait --timeout 10m
+
+        echo "✅ Deployment completed successfully"

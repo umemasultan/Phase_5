@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, BackgroundTasks
+from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
 from pydantic import BaseModel
 from typing import Optional, List, Dict, Any
 import uuid
@@ -293,6 +293,41 @@ async def list_tasks(
                     tasks.append(task)
 
         return tasks
+
+@app.post("/api/jobs/reminder-callback")
+async def handle_reminder_job(request: Request):
+    """
+    Dapr Jobs API callback endpoint
+    This is called by Dapr when the scheduled reminder time arrives
+    """
+    job_data = await request.json()
+
+    # Extract reminder data
+    task_id = job_data.get("task_id")
+    user_id = job_data.get("user_id")
+    title = job_data.get("title")
+
+    print(f"⏰ Reminder triggered for task {task_id}")
+
+    # Create reminder event
+    reminder_event = ReminderEvent(
+        id=str(uuid.uuid4()),
+        task_id=task_id,
+        title=title,
+        due_at=job_data.get("due_at"),
+        remind_at=job_data.get("remind_at"),
+        user_id=user_id
+    )
+
+    # Publish reminder event to notification service
+    with DaprClient() as client:
+        await client.publish_event(
+            pubsub_name=DAPR_PUBSUB_NAME,
+            topic_name="reminder-events",
+            data=reminder_event.json()
+        )
+
+    return {"status": "SUCCESS"}
 
 if __name__ == "__main__":
     import uvicorn

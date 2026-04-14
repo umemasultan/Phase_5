@@ -2,12 +2,15 @@ import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import taskApi from '../services/taskApi';
+import Navbar from '../components/Navbar';
 import { suggestPriority, suggestTags, estimateCompletionTime } from '../utils/aiFeatures';
 import { notifyTaskCreated, notifyTaskCompleted, scheduleTaskReminder } from '../utils/notifications';
 import { exportToJSON, exportToCSV, importFromJSON, backupToLocalStorage } from '../utils/exportImport';
 import KanbanBoard from '../components/KanbanBoard';
+import { useWebSocket } from '../contexts/WebSocketContext';
 
 export default function Tasks() {
+  const { lastMessage, isConnected } = useWebSocket();
   const router = useRouter();
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -52,15 +55,19 @@ export default function Tasks() {
     }
   }, [router]);
 
+  // WebSocket real-time updates
+  useEffect(() => {
+    if (lastMessage && lastMessage.type === 'task_update') {
+      console.log('🔄 Real-time task update received:', lastMessage);
+      // Refresh tasks when update received
+      fetchTasks();
+    }
+  }, [lastMessage]);
+
   const toggleDarkMode = () => {
     const newMode = !darkMode;
     setDarkMode(newMode);
     localStorage.setItem('darkMode', newMode.toString());
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('currentUser');
-    router.push('/login');
   };
 
   const getAiSuggestions = () => {
@@ -314,195 +321,90 @@ export default function Tasks() {
         }
       `}</style>
 
-      {/* Navigation */}
-      <nav style={{
-        padding: '20px 0',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: currentTheme.navBg,
-        backdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-        position: 'sticky',
-        top: 0,
-        zIndex: 10,
-        boxShadow: darkMode ? '0 4px 30px rgba(0, 0, 0, 0.3)' : '0 2px 20px rgba(0, 0, 0, 0.05)'
-      }}>
+      <Navbar
+        darkMode={darkMode}
+        toggleDarkMode={toggleDarkMode}
+        currentUser={currentUser}
+        showExportButton={true}
+        onExportClick={() => setShowExportMenu(!showExportMenu)}
+      />
+
+      {/* Export Menu - Positioned below navbar */}
+      {showExportMenu && (
         <div style={{
-          width: '100%',
-          maxWidth: '1400px',
-          padding: '0 60px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
+          position: 'fixed',
+          top: '90px',
+          right: '60px',
+          background: currentTheme.cardBg,
+          borderRadius: '12px',
+          padding: '10px',
+          boxShadow: '0 10px 40px rgba(0,0,0,0.3)',
+          border: darkMode ? '1px solid rgba(255, 255, 255, 0.2)' : '1px solid rgba(23, 21, 59, 0.08)',
+          minWidth: '180px',
+          zIndex: 100
         }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '15px', cursor: 'pointer' }} onClick={() => router.push('/')}>
-          <div style={{
-            width: '50px',
-            height: '50px',
-            background: `linear-gradient(135deg, ${currentTheme.primary} 0%, ${currentTheme.primaryLight} 100%)`,
-            borderRadius: '14px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '28px',
-            fontWeight: '900',
-            color: 'white',
-            boxShadow: '0 8px 25px rgba(33, 15, 55, 0.4)'
-          }}>T</div>
-          <div>
-            <h2 style={{ color: currentTheme.navText, margin: 0, fontSize: '24px', fontWeight: '800', letterSpacing: '-0.5px' }}>TaskMaster Pro</h2>
-            <p style={{ margin: 0, fontSize: '11px', color: darkMode ? 'rgba(255,255,255,0.5)' : 'rgba(33, 15, 55, 0.5)', fontWeight: '600', letterSpacing: '0.5px' }}>TASK MANAGEMENT</p>
-          </div>
-        </div>
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <button onClick={toggleDarkMode} style={{
-            background: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(23, 21, 59, 0.08)',
-            color: currentTheme.navText,
+          <button onClick={handleExportJSON} style={{
+            width: '100%',
+            background: 'transparent',
+            color: currentTheme.text,
             border: 'none',
-            padding: '12px 18px',
-            borderRadius: '12px',
-            fontWeight: '700',
+            padding: '12px 16px',
+            borderRadius: '8px',
+            fontWeight: '600',
             cursor: 'pointer',
-            fontSize: '18px',
-            backdropFilter: 'blur(10px)',
-            transition: 'all 0.3s'
-          }}>
-            {darkMode ? '☀️' : '🌙'}
+            textAlign: 'left',
+            transition: 'all 0.2s'
+          }} onMouseEnter={(e) => e.target.style.background = darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(23,21,59,0.05)'}
+             onMouseLeave={(e) => e.target.style.background = 'transparent'}>
+            📄 Export JSON
           </button>
-          <button onClick={() => router.push('/dashboard')} style={{
-            background: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(23, 21, 59, 0.08)',
-            color: currentTheme.navText,
+          <button onClick={handleExportCSV} style={{
+            width: '100%',
+            background: 'transparent',
+            color: currentTheme.text,
             border: 'none',
-            padding: '12px 24px',
-            borderRadius: '12px',
-            fontWeight: '700',
+            padding: '12px 16px',
+            borderRadius: '8px',
+            fontWeight: '600',
             cursor: 'pointer',
-            backdropFilter: 'blur(10px)',
-            transition: 'all 0.3s'
-          }}>Dashboard</button>
-          <button onClick={() => router.push('/audit')} style={{
-            background: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(23, 21, 59, 0.08)',
-            color: currentTheme.navText,
+            textAlign: 'left',
+            transition: 'all 0.2s'
+          }} onMouseEnter={(e) => e.target.style.background = darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(23,21,59,0.05)'}
+             onMouseLeave={(e) => e.target.style.background = 'transparent'}>
+            📊 Export CSV
+          </button>
+          <button onClick={handleBackup} style={{
+            width: '100%',
+            background: 'transparent',
+            color: currentTheme.text,
             border: 'none',
-            padding: '12px 24px',
-            borderRadius: '12px',
-            fontWeight: '700',
+            padding: '12px 16px',
+            borderRadius: '8px',
+            fontWeight: '600',
             cursor: 'pointer',
-            backdropFilter: 'blur(10px)',
-            transition: 'all 0.3s'
-          }}>Audit</button>
-          <button onClick={() => router.push('/analytics')} style={{
-            background: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(23, 21, 59, 0.08)',
-            color: currentTheme.navText,
-            border: 'none',
-            padding: '12px 24px',
-            borderRadius: '12px',
-            fontWeight: '700',
+            textAlign: 'left',
+            transition: 'all 0.2s'
+          }} onMouseEnter={(e) => e.target.style.background = darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(23,21,59,0.05)'}
+             onMouseLeave={(e) => e.target.style.background = 'transparent'}>
+            💾 Backup
+          </button>
+          <label style={{
+            width: '100%',
+            display: 'block',
+            color: currentTheme.text,
+            padding: '12px 16px',
+            borderRadius: '8px',
+            fontWeight: '600',
             cursor: 'pointer',
-            backdropFilter: 'blur(10px)',
-            transition: 'all 0.3s'
-          }}>Analytics</button>
-          <div style={{ position: 'relative' }}>
-            <button onClick={() => setShowExportMenu(!showExportMenu)} style={{
-              background: `linear-gradient(135deg, ${currentTheme.primary} 0%, ${currentTheme.primaryLight} 100%)`,
-              color: 'white',
-              border: 'none',
-              padding: '12px 24px',
-              borderRadius: '12px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              transition: 'all 0.3s'
-            }}>⬇️ Export</button>
-            {showExportMenu && (
-              <div style={{
-                position: 'absolute',
-                top: '60px',
-                right: 0,
-                background: currentTheme.cardBg,
-                borderRadius: '12px',
-                padding: '10px',
-                boxShadow: '0 10px 40px rgba(0,0,0,0.3)',
-                border: darkMode ? '1px solid rgba(255, 255, 255, 0.2)' : '1px solid rgba(23, 21, 59, 0.08)',
-                minWidth: '180px',
-                zIndex: 100
-              }}>
-                <button onClick={handleExportJSON} style={{
-                  width: '100%',
-                  background: 'transparent',
-                  color: currentTheme.text,
-                  border: 'none',
-                  padding: '12px 16px',
-                  borderRadius: '8px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  transition: 'all 0.2s'
-                }} onMouseEnter={(e) => e.target.style.background = darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(23,21,59,0.05)'}
-                   onMouseLeave={(e) => e.target.style.background = 'transparent'}>
-                  📄 Export JSON
-                </button>
-                <button onClick={handleExportCSV} style={{
-                  width: '100%',
-                  background: 'transparent',
-                  color: currentTheme.text,
-                  border: 'none',
-                  padding: '12px 16px',
-                  borderRadius: '8px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  transition: 'all 0.2s'
-                }} onMouseEnter={(e) => e.target.style.background = darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(23,21,59,0.05)'}
-                   onMouseLeave={(e) => e.target.style.background = 'transparent'}>
-                  📊 Export CSV
-                </button>
-                <button onClick={handleBackup} style={{
-                  width: '100%',
-                  background: 'transparent',
-                  color: currentTheme.text,
-                  border: 'none',
-                  padding: '12px 16px',
-                  borderRadius: '8px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  transition: 'all 0.2s'
-                }} onMouseEnter={(e) => e.target.style.background = darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(23,21,59,0.05)'}
-                   onMouseLeave={(e) => e.target.style.background = 'transparent'}>
-                  💾 Backup
-                </button>
-                <label style={{
-                  width: '100%',
-                  display: 'block',
-                  color: currentTheme.text,
-                  padding: '12px 16px',
-                  borderRadius: '8px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  transition: 'all 0.2s'
-                }} onMouseEnter={(e) => e.target.style.background = darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(23,21,59,0.05)'}
-                   onMouseLeave={(e) => e.target.style.background = 'transparent'}>
-                  📥 Import
-                  <input type="file" accept=".json" onChange={handleImport} style={{ display: 'none' }} />
-                </label>
-              </div>
-            )}
-          </div>
-          <button onClick={handleLogout} style={{
-            background: '#fee2e2',
-            color: '#dc2626',
-            border: 'none',
-            padding: '12px 24px',
-            borderRadius: '12px',
-            fontWeight: '700',
-            cursor: 'pointer',
-            transition: 'all 0.3s'
-          }}>Logout</button>
+            textAlign: 'left',
+            transition: 'all 0.2s'
+          }} onMouseEnter={(e) => e.target.style.background = darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(23,21,59,0.05)'}
+             onMouseLeave={(e) => e.target.style.background = 'transparent'}>
+            📥 Import
+            <input type="file" accept=".json" onChange={handleImport} style={{ display: 'none' }} />
+          </label>
         </div>
-      </div>
-      </nav>
+      )}
 
       <main style={{
         padding: '60px 0',
@@ -1065,7 +967,7 @@ export default function Tasks() {
         zIndex: 1
       }}>
         <p style={{ margin: 0, fontSize: '14px', fontWeight: '600', opacity: '0.8' }}>
-          TaskMaster Pro © 2026 | Built by Umema Sultan
+          TaskMaster Pro © 2026 | Enterprise Edition | Created by Umema Sultan
         </p>
       </footer>
     </div>

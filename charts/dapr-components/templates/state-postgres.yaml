@@ -8,10 +8,14 @@ spec:
   version: v1
   metadata:
   - name: connectionString
-    value: "host=neon-postgres.postgres.svc.cluster.local port=5432 user=postgres password=dapr-secret dbname=todo-app sslmode=disable"
+    secretKeyRef:
+      name: database-connection
+      key: connectionString
   - name: versionColumnType
     value: "dapr_version"
   - name: tablePrefix
     value: "dapr"
   - name: actorStateStore
     value: "true"
+auth:
+  secretStore: kubernetes-secrets

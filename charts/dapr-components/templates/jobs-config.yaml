@@ -1,0 +1,9 @@
+apiVersion: dapr.io/v1alpha1
+kind: Configuration
+metadata:
+  name: dapr-config
+  namespace: todo-prod
+spec:
+  features:
+    - name: JobsAlpha
+      enabled: true

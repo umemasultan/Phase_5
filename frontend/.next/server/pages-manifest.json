@@ -3,8 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/tasks": "pages/tasks.js",
-  "/dashboard": "pages/dashboard.js",
-  "/analytics": "pages/analytics.js",
-  "/": "pages/index.js",
-  "/audit": "pages/audit.js"
+  "/audit": "pages/audit.js",
+  "/dashboard": "pages/dashboard.js"
 }
