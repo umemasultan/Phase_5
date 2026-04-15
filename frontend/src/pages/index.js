@@ -5,16 +5,27 @@ import Navbar from '../components/Navbar';
 
 export default function Home() {
   const router = useRouter();
+  const [darkMode, setDarkMode] = useState(true);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    const savedMode = localStorage.getItem('darkMode');
+    if (savedMode !== null) {
+      setDarkMode(savedMode === 'true');
+    }
   }, []);
+
+  const toggleDarkMode = () => {
+    const newMode = !darkMode;
+    setDarkMode(newMode);
+    localStorage.setItem('darkMode', newMode.toString());
+  };
 
   if (!mounted) return null;
 
-  // Single consistent dark theme
-  const theme = {
+  // Theme based on darkMode
+  const theme = darkMode ? {
     primary: '#6366f1',
     primaryDark: '#4f46e5',
     secondary: '#8b5cf6',
@@ -23,6 +34,16 @@ export default function Home() {
     cardBg: 'rgba(30, 27, 75, 0.6)',
     text: '#ffffff',
     textMuted: 'rgba(255, 255, 255, 0.7)',
+    border: 'rgba(99, 102, 241, 0.2)'
+  } : {
+    primary: '#6366f1',
+    primaryDark: '#4f46e5',
+    secondary: '#8b5cf6',
+    background: '#f8f7fc',
+    backgroundGradient: 'linear-gradient(135deg, #f8f7fc 0%, #eeecf7 50%, #e4e1f1 100%)',
+    cardBg: 'rgba(255, 255, 255, 0.8)',
+    text: '#1f2937',
+    textMuted: 'rgba(31, 41, 55, 0.7)',
     border: 'rgba(99, 102, 241, 0.2)'
   };
 
@@ -103,7 +124,7 @@ export default function Home() {
         zIndex: 0
       }} />
 
-      <Navbar darkMode={true} toggleDarkMode={() => {}} showAuthButtons={true} isHomePage={true} />
+      <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} showAuthButtons={true} isHomePage={true} />
 
       {/* Hero Section */}
       <main style={{
