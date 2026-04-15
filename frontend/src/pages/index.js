@@ -211,7 +211,7 @@ export default function Home() {
         </div>
 
         <h1 className="fade-in-up" style={{
-          fontSize: '80px',
+          fontSize: '3rem',
           fontWeight: '900',
           margin: '0 0 30px 0',
           background: darkMode
@@ -354,7 +354,7 @@ export default function Home() {
               animation: 'float 6s ease-in-out infinite'
             }} />
             <div style={{
-              fontSize: '64px',
+              fontSize: '3rem',
               marginBottom: '25px',
               position: 'relative',
               zIndex: 1,
@@ -415,7 +415,7 @@ export default function Home() {
               animation: 'float 7s ease-in-out infinite'
             }} />
             <div style={{
-              fontSize: '64px',
+              fontSize: '3rem',
               marginBottom: '25px',
               position: 'relative',
               zIndex: 1,
@@ -476,7 +476,7 @@ export default function Home() {
               animation: 'float 8s ease-in-out infinite'
             }} />
             <div style={{
-              fontSize: '64px',
+              fontSize: '3rem',
               marginBottom: '25px',
               position: 'relative',
               zIndex: 1,

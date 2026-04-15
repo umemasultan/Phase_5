@@ -139,16 +139,16 @@ export default function Analytics() {
       <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} currentUser={currentUser} />
 
       <main style={{
-        padding: '60px 0',
+        padding: '3rem 0',
         maxWidth: '1400px',
         margin: '0 auto',
         position: 'relative',
         zIndex: 1
       }}>
-        <div style={{ padding: '0 60px' }}>
+        <div style={{ padding: '0 1.5rem' }}>
           <h1 style={{
             color: currentTheme.headerText,
-            fontSize: '48px',
+            fontSize: '2.5rem',
             fontWeight: '900',
             marginBottom: '40px',
             letterSpacing: '-1px'
@@ -237,7 +237,7 @@ export default function Analytics() {
               opacity: '0.1'
             }}>🎯</div>
             <h2 style={{ fontSize: '24px', fontWeight: '800', margin: '0 0 20px 0', position: 'relative', zIndex: 1 }}>Productivity Score</h2>
-            <div style={{ fontSize: '80px', fontWeight: '900', margin: '0 0 10px 0', position: 'relative', zIndex: 1 }}>{productivityScore}%</div>
+            <div style={{ fontSize: '3rem', fontWeight: '900', margin: '0 0 10px 0', position: 'relative', zIndex: 1 }}>{productivityScore}%</div>
             <p style={{ fontSize: '16px', opacity: 0.9, margin: 0, position: 'relative', zIndex: 1 }}>
               {productivityScore >= 80 ? 'Excellent! Keep up the great work!' :
                productivityScore >= 60 ? 'Good progress! You\'re doing well.' :
@@ -255,9 +255,9 @@ export default function Analytics() {
               border: darkMode ? '2px solid rgba(255, 255, 255, 0.2)' : '1px solid rgba(23, 21, 59, 0.08)',
               boxShadow: darkMode ? '0 15px 50px rgba(0,0,0,0.25)' : '0 10px 40px rgba(0,0,0,0.08)'
             }}>
-              <div style={{ fontSize: '48px', marginBottom: '15px' }}>🔥</div>
+              <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>🔥</div>
               <h3 style={{ color: currentTheme.cardText, fontSize: '20px', fontWeight: '800', margin: '0 0 10px 0' }}>Current Streak</h3>
-              <div style={{ fontSize: '48px', fontWeight: '900', color: currentTheme.primary, margin: '10px 0' }}>{streakData.current}</div>
+              <div style={{ fontSize: '2.5rem', fontWeight: '900', color: currentTheme.primary, margin: '10px 0' }}>{streakData.current}</div>
               <p style={{ color: darkMode ? '#ffffff' : '#6b7280', fontSize: '14px', margin: 0 }}>Longest: {streakData.longest} days</p>
             </div>
 
@@ -269,7 +269,7 @@ export default function Analytics() {
               border: darkMode ? '2px solid rgba(255, 255, 255, 0.2)' : '1px solid rgba(23, 21, 59, 0.08)',
               boxShadow: darkMode ? '0 15px 50px rgba(0,0,0,0.25)' : '0 10px 40px rgba(0,0,0,0.08)'
             }}>
-              <div style={{ fontSize: '48px', marginBottom: '15px' }}>⏰</div>
+              <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>⏰</div>
               <h3 style={{ color: currentTheme.cardText, fontSize: '20px', fontWeight: '800', margin: '0 0 15px 0' }}>Upcoming Deadlines</h3>
               {upcomingDeadlines.length > 0 ? (
                 <div style={{ display: 'grid', gap: '10px' }}>
@@ -297,7 +297,7 @@ export default function Analytics() {
           <div style={{
             background: currentTheme.cardBg,
             borderRadius: '20px',
-            padding: '40px',
+            padding: '2rem',
             marginBottom: '40px',
             border: darkMode ? '2px solid rgba(255, 255, 255, 0.2)' : '1px solid rgba(23, 21, 59, 0.08)',
             boxShadow: darkMode ? '0 15px 50px rgba(0,0,0,0.25)' : '0 10px 40px rgba(0,0,0,0.08)'
@@ -335,7 +335,7 @@ export default function Analytics() {
             <div style={{
               background: currentTheme.cardBg,
               borderRadius: '20px',
-              padding: '40px',
+              padding: '2rem',
               border: darkMode ? '2px solid rgba(255, 255, 255, 0.2)' : '1px solid rgba(23, 21, 59, 0.08)',
               boxShadow: darkMode ? '0 15px 50px rgba(0,0,0,0.25)' : '0 10px 40px rgba(0,0,0,0.08)'
             }}>

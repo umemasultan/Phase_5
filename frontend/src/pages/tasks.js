@@ -407,13 +407,13 @@ export default function Tasks() {
       )}
 
       <main style={{
-        padding: '60px 0',
+        padding: '3rem 0',
         maxWidth: '1400px',
         margin: '0 auto',
         position: 'relative',
         zIndex: 1
       }}>
-        <div style={{ padding: '0 60px' }}>
+        <div style={{ padding: '0 1.5rem' }}>
         {/* Stats Cards */}
         <div style={{
           display: 'grid',
@@ -430,7 +430,7 @@ export default function Tasks() {
             <div key={index} className="hover-scale" style={{
               background: currentTheme.cardBg,
               borderRadius: '20px',
-              padding: '30px',
+              padding: '1.5rem',
               boxShadow: darkMode ? '0 10px 40px rgba(0,0,0,0.2)' : '0 8px 30px rgba(0,0,0,0.08)',
               border: darkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(33, 15, 55, 0.08)',
               position: 'relative',
@@ -440,11 +440,11 @@ export default function Tasks() {
                 position: 'absolute',
                 top: '-20px',
                 right: '-20px',
-                fontSize: '80px',
+                fontSize: '3rem',
                 opacity: '0.1'
               }}>{stat.icon}</div>
               <div style={{ fontSize: '13px', color: darkMode ? '#ffffff' : '#6b7280', fontWeight: '700', marginBottom: '12px', letterSpacing: '1px' }}>{stat.label}</div>
-              <div style={{ fontSize: '42px', fontWeight: '900', color: stat.color, position: 'relative', zIndex: 1 }}>{stat.value}</div>
+              <div style={{ fontSize: '2rem', fontWeight: '900', color: stat.color, position: 'relative', zIndex: 1 }}>{stat.value}</div>
             </div>
           ))}
         </div>
@@ -459,7 +459,7 @@ export default function Tasks() {
           border: darkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(33, 15, 55, 0.08)'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px', marginBottom: '25px' }}>
-            <h2 style={{ margin: 0, fontSize: '32px', fontWeight: '900', color: currentTheme.cardText, letterSpacing: '-0.5px' }}>My Tasks</h2>
+            <h2 style={{ margin: 0, fontSize: '1.75rem', fontWeight: '900', color: currentTheme.cardText, letterSpacing: '-0.5px' }}>My Tasks</h2>
             <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
               <div style={{ display: 'flex', background: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(23,21,59,0.08)', borderRadius: '12px', padding: '4px' }}>
                 <button onClick={() => setViewMode('list')} style={{
@@ -582,7 +582,7 @@ export default function Tasks() {
             boxShadow: darkMode ? '0 10px 40px rgba(0,0,0,0.2)' : '0 8px 30px rgba(0,0,0,0.08)',
             border: darkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(33, 15, 55, 0.08)'
           }}>
-            <h3 style={{ margin: '0 0 25px 0', fontSize: '26px', fontWeight: '800', color: currentTheme.cardText }}>Create New Task</h3>
+            <h3 style={{ margin: '0 0 25px 0', fontSize: '1.5rem', fontWeight: '800', color: currentTheme.cardText }}>Create New Task</h3>
             <form onSubmit={handleCreateTask}>
               <input
                 type="text"
@@ -835,7 +835,7 @@ export default function Tasks() {
                 style={{
                   background: currentTheme.cardBg,
                   borderRadius: '20px',
-                  padding: '30px',
+                  padding: '1.5rem',
                   boxShadow: darkMode ? '0 10px 40px rgba(0,0,0,0.2)' : '0 8px 30px rgba(0,0,0,0.08)',
                   borderLeft: `6px solid ${priorityColors[task.priority].bg}`,
                   opacity: task.completed ? 0.6 : 1,

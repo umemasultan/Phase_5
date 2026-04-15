@@ -154,16 +154,16 @@ export default function Dashboard() {
       <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} currentUser={currentUser} />
 
       <main style={{
-        padding: '60px 0',
+        padding: '3rem 0',
         maxWidth: '1400px',
         margin: '0 auto',
         position: 'relative',
         zIndex: 1
       }}>
-        <div style={{ padding: '0 60px' }}>
+        <div style={{ padding: '0 1.5rem' }}>
         <h1 className="fade-in" style={{
           color: currentTheme.headerText,
-          fontSize: '48px',
+          fontSize: '2.5rem',
           fontWeight: '900',
           marginBottom: '40px',
           letterSpacing: '-1px'
@@ -179,7 +179,7 @@ export default function Dashboard() {
           <div className="fade-in hover-scale" style={{
             background: `linear-gradient(135deg, ${currentTheme.primary} 0%, ${currentTheme.primaryLight} 100%)`,
             borderRadius: '24px',
-            padding: '40px',
+            padding: '2rem',
             color: 'white',
             boxShadow: '0 15px 50px rgba(33, 15, 55, 0.4)',
             position: 'relative',
@@ -201,7 +201,7 @@ export default function Dashboard() {
           <div className="fade-in hover-scale" style={{
             background: currentTheme.cardBg,
             borderRadius: '24px',
-            padding: '40px',
+            padding: '2rem',
             boxShadow: darkMode ? '0 15px 50px rgba(0,0,0,0.25)' : '0 10px 40px rgba(0,0,0,0.08)',
             border: darkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(33, 15, 55, 0.08)',
             position: 'relative',
@@ -223,7 +223,7 @@ export default function Dashboard() {
           <div className="fade-in hover-scale" style={{
             background: currentTheme.cardBg,
             borderRadius: '24px',
-            padding: '40px',
+            padding: '2rem',
             boxShadow: darkMode ? '0 15px 50px rgba(0,0,0,0.25)' : '0 10px 40px rgba(0,0,0,0.08)',
             border: darkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(33, 15, 55, 0.08)',
             position: 'relative',
@@ -245,7 +245,7 @@ export default function Dashboard() {
           <div className="fade-in hover-scale" style={{
             background: currentTheme.cardBg,
             borderRadius: '24px',
-            padding: '40px',
+            padding: '2rem',
             boxShadow: darkMode ? '0 15px 50px rgba(0,0,0,0.25)' : '0 10px 40px rgba(0,0,0,0.08)',
             border: darkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(33, 15, 55, 0.08)',
             position: 'relative',
@@ -285,7 +285,7 @@ export default function Dashboard() {
               boxShadow: '0 8px 25px rgba(239, 68, 68, 0.15)'
             }}>
               <div style={{ fontSize: '15px', color: '#991b1b', fontWeight: '800', marginBottom: '12px', letterSpacing: '1px' }}>HIGH PRIORITY</div>
-              <div style={{ fontSize: '48px', fontWeight: '900', color: '#ef4444' }}>{stats.high}</div>
+              <div style={{ fontSize: '2.5rem', fontWeight: '900', color: '#ef4444' }}>{stats.high}</div>
             </div>
             <div className="hover-scale" style={{
               background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
@@ -295,7 +295,7 @@ export default function Dashboard() {
               boxShadow: '0 8px 25px rgba(245, 158, 11, 0.15)'
             }}>
               <div style={{ fontSize: '15px', color: '#92400e', fontWeight: '800', marginBottom: '12px', letterSpacing: '1px' }}>MEDIUM PRIORITY</div>
-              <div style={{ fontSize: '48px', fontWeight: '900', color: '#f59e0b' }}>{stats.medium}</div>
+              <div style={{ fontSize: '2.5rem', fontWeight: '900', color: '#f59e0b' }}>{stats.medium}</div>
             </div>
             <div className="hover-scale" style={{
               background: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)',
@@ -305,7 +305,7 @@ export default function Dashboard() {
               boxShadow: '0 8px 25px rgba(16, 185, 129, 0.15)'
             }}>
               <div style={{ fontSize: '15px', color: '#065f46', fontWeight: '800', marginBottom: '12px', letterSpacing: '1px' }}>LOW PRIORITY</div>
-              <div style={{ fontSize: '48px', fontWeight: '900', color: '#10b981' }}>{stats.low}</div>
+              <div style={{ fontSize: '2.5rem', fontWeight: '900', color: '#10b981' }}>{stats.low}</div>
             </div>
           </div>
         </div>
@@ -336,7 +336,7 @@ export default function Dashboard() {
             }}>View All →</button>
           </div>
           {loading ? (
-            <p style={{ color: darkMode ? '#ffffff' : '#6b7280', textAlign: 'center', padding: '40px', fontSize: '16px', fontWeight: '600' }}>Loading tasks...</p>
+            <p style={{ color: darkMode ? '#ffffff' : '#6b7280', textAlign: 'center', padding: '2rem', fontSize: '16px', fontWeight: '600' }}>Loading tasks...</p>
           ) : recentTasks.length > 0 ? (
             <div style={{ display: 'grid', gap: '18px' }}>
               {recentTasks.map((task, index) => (
