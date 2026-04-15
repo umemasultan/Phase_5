@@ -24,27 +24,29 @@ export default function Home() {
 
   if (!mounted) return null;
 
-  // Theme based on darkMode
+  // Consistent blue theme
   const theme = darkMode ? {
-    primary: '#6366f1',
-    primaryDark: '#4f46e5',
-    secondary: '#8b5cf6',
-    background: '#0a0818',
-    backgroundGradient: 'linear-gradient(135deg, #0a0818 0%, #17153B 50%, #1e1b4b 100%)',
-    cardBg: 'rgba(30, 27, 75, 0.6)',
+    primary: '#3b82f6',
+    primaryLight: '#60a5fa',
+    secondary: '#2563eb',
+    accent: '#1d4ed8',
+    background: '#0f172a',
+    backgroundGradient: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)',
+    cardBg: 'rgba(30, 41, 59, 0.7)',
     text: '#ffffff',
-    textMuted: 'rgba(255, 255, 255, 0.7)',
-    border: 'rgba(99, 102, 241, 0.2)'
+    textMuted: 'rgba(255, 255, 255, 0.75)',
+    border: 'rgba(59, 130, 246, 0.25)'
   } : {
-    primary: '#6366f1',
-    primaryDark: '#4f46e5',
-    secondary: '#8b5cf6',
-    background: '#f8f7fc',
-    backgroundGradient: 'linear-gradient(135deg, #f8f7fc 0%, #eeecf7 50%, #e4e1f1 100%)',
-    cardBg: 'rgba(255, 255, 255, 0.8)',
-    text: '#1f2937',
-    textMuted: 'rgba(31, 41, 55, 0.7)',
-    border: 'rgba(99, 102, 241, 0.2)'
+    primary: '#3b82f6',
+    primaryLight: '#60a5fa',
+    secondary: '#2563eb',
+    accent: '#1d4ed8',
+    background: '#f8fafc',
+    backgroundGradient: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%)',
+    cardBg: 'rgba(255, 255, 255, 0.9)',
+    text: '#0f172a',
+    textMuted: 'rgba(15, 23, 42, 0.7)',
+    border: 'rgba(59, 130, 246, 0.2)'
   };
 
   return (
@@ -56,23 +58,23 @@ export default function Home() {
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
     }}>
       <Head>
-        <title>Phase V - Advanced Event-Driven Task Management</title>
-        <meta name="description" content="Enterprise-grade microservices architecture with Dapr, Kafka, and real-time collaboration" />
+        <title>Phase V - Enterprise Event-Driven Architecture</title>
+        <meta name="description" content="Advanced cloud-native microservices with Dapr, Kafka, and real-time collaboration" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
       </Head>
 
       <style jsx>{`
         @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-30px) rotate(5deg); }
+          0%, 100% { transform: translateY(0px) scale(1); }
+          50% { transform: translateY(-40px) scale(1.05); }
         }
         @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(40px); }
+          from { opacity: 0; transform: translateY(50px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes glow {
-          0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
-          50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+        @keyframes shimmer {
+          0% { background-position: -1000px 0; }
+          100% { background-position: 1000px 0; }
         }
         .fade-in-up {
           animation: fadeInUp 1s ease-out forwards;
@@ -83,44 +85,51 @@ export default function Home() {
         .delay-3 { animation-delay: 0.6s; }
         .delay-4 { animation-delay: 0.8s; }
         .delay-5 { animation-delay: 1s; }
+        .delay-6 { animation-delay: 1.2s; }
       `}</style>
 
-      {/* Animated Background Elements */}
+      {/* Premium Background Effects */}
       <div style={{
         position: 'absolute',
-        top: '-20%',
-        right: '-10%',
+        top: '-30%',
+        right: '-15%',
+        width: '800px',
+        height: '800px',
+        background: darkMode
+          ? 'radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%)'
+          : 'radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%)',
+        borderRadius: '50%',
+        filter: 'blur(120px)',
+        animation: 'float 20s ease-in-out infinite',
+        zIndex: 0
+      }} />
+      <div style={{
+        position: 'absolute',
+        bottom: '-30%',
+        left: '-15%',
+        width: '700px',
+        height: '700px',
+        background: darkMode
+          ? 'radial-gradient(circle, rgba(37, 99, 235, 0.18) 0%, transparent 70%)'
+          : 'radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, transparent 70%)',
+        borderRadius: '50%',
+        filter: 'blur(120px)',
+        animation: 'float 25s ease-in-out infinite reverse',
+        zIndex: 0
+      }} />
+      <div style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
         width: '600px',
         height: '600px',
-        background: 'radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%)',
+        background: darkMode
+          ? 'radial-gradient(circle, rgba(29, 78, 216, 0.15) 0%, transparent 70%)'
+          : 'radial-gradient(circle, rgba(29, 78, 216, 0.1) 0%, transparent 70%)',
         borderRadius: '50%',
         filter: 'blur(100px)',
         animation: 'float 15s ease-in-out infinite',
-        zIndex: 0
-      }} />
-      <div style={{
-        position: 'absolute',
-        bottom: '-20%',
-        left: '-10%',
-        width: '500px',
-        height: '500px',
-        background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)',
-        borderRadius: '50%',
-        filter: 'blur(100px)',
-        animation: 'float 20s ease-in-out infinite reverse',
-        zIndex: 0
-      }} />
-      <div style={{
-        position: 'absolute',
-        top: '40%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '400px',
-        height: '400px',
-        background: 'radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%)',
-        borderRadius: '50%',
-        filter: 'blur(80px)',
-        animation: 'float 12s ease-in-out infinite',
         zIndex: 0
       }} />
 
@@ -128,111 +137,145 @@ export default function Home() {
 
       {/* Hero Section */}
       <main style={{
-        maxWidth: '1400px',
+        maxWidth: '1600px',
         margin: '0 auto',
-        padding: '0 2rem',
+        padding: '0 2.5rem',
         position: 'relative',
         zIndex: 1
       }}>
         <div style={{
-          minHeight: '90vh',
+          minHeight: '92vh',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
           textAlign: 'center'
         }}>
-          {/* Top Badge */}
+          {/* Premium Badge */}
           <div className="fade-in-up delay-1" style={{
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '0.75rem',
-            background: 'rgba(99, 102, 241, 0.1)',
-            backdropFilter: 'blur(20px)',
-            padding: '0.75rem 1.5rem',
+            gap: '1rem',
+            background: darkMode
+              ? 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.15) 100%)'
+              : 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%)',
+            backdropFilter: 'blur(30px)',
+            padding: '0.875rem 2rem',
             borderRadius: '100px',
-            border: `1px solid ${theme.border}`,
-            marginBottom: '2.5rem'
+            border: `2px solid ${theme.border}`,
+            marginBottom: '3rem',
+            boxShadow: darkMode
+              ? '0 8px 32px rgba(59, 130, 246, 0.2)'
+              : '0 4px 20px rgba(59, 130, 246, 0.15)'
           }}>
-            <span style={{ fontSize: '1.25rem' }}>🚀</span>
             <span style={{
-              fontSize: '0.875rem',
-              fontWeight: '700',
-              letterSpacing: '1.5px',
-              color: '#a5b4fc',
+              fontSize: '1.5rem',
+              filter: 'drop-shadow(0 0 10px rgba(59, 130, 246, 0.8))'
+            }}>🚀</span>
+            <span style={{
+              fontSize: '0.95rem',
+              fontWeight: '800',
+              letterSpacing: '2px',
+              background: `linear-gradient(135deg, ${theme.primary} 0%, ${theme.secondary} 100%)`,
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
               textTransform: 'uppercase'
             }}>
-              Phase V Hackathon 2026
+              Phase V Hackathon 2026 • Enterprise Edition
             </span>
           </div>
 
-          {/* Main Heading */}
+          {/* Hero Heading */}
           <h1 className="fade-in-up delay-2" style={{
-            fontSize: '4.5rem',
+            fontSize: '5.5rem',
             fontWeight: '900',
-            margin: '0 0 2rem 0',
-            lineHeight: '1.1',
-            letterSpacing: '-3px',
-            maxWidth: '1100px',
+            margin: '0 0 2.5rem 0',
+            lineHeight: '1.05',
+            letterSpacing: '-4px',
+            maxWidth: '1300px',
             color: theme.text
           }}>
-            Enterprise-Grade
+            Next-Generation
             <br/>
             <span style={{
-              background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%)',
+              background: `linear-gradient(135deg, ${theme.primary} 0%, ${theme.primaryLight} 50%, ${theme.secondary} 100%)`,
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-              position: 'relative'
+              position: 'relative',
+              display: 'inline-block'
             }}>
               Event-Driven Architecture
+              <div style={{
+                position: 'absolute',
+                bottom: '-10px',
+                left: '0',
+                right: '0',
+                height: '6px',
+                background: `linear-gradient(90deg, transparent, ${theme.primary}, transparent)`,
+                borderRadius: '3px',
+                opacity: 0.6
+              }} />
             </span>
           </h1>
 
-          {/* Subtitle */}
+          {/* Premium Subtitle */}
           <p className="fade-in-up delay-3" style={{
-            fontSize: '1.35rem',
-            margin: '0 auto 3.5rem',
-            maxWidth: '800px',
+            fontSize: '1.5rem',
+            margin: '0 auto 4rem',
+            maxWidth: '900px',
             fontWeight: '500',
             lineHeight: '1.8',
             color: theme.textMuted
           }}>
-            Advanced microservices with <strong style={{ color: '#a5b4fc' }}>Dapr abstraction</strong>,
-            <strong style={{ color: '#a5b4fc' }}> Kafka event streaming</strong>, and
-            <strong style={{ color: '#a5b4fc' }}> real-time WebSocket</strong> collaboration.
-            Built for scale, designed for performance.
+            Enterprise-grade microservices powered by{' '}
+            <strong style={{
+              color: theme.primary,
+              fontWeight: '700'
+            }}>Dapr abstraction</strong>,{' '}
+            <strong style={{
+              color: theme.primary,
+              fontWeight: '700'
+            }}>Kafka event streaming</strong>, and{' '}
+            <strong style={{
+              color: theme.primary,
+              fontWeight: '700'
+            }}>real-time WebSocket</strong> collaboration.
+            <br/>
+            Built for scale. Designed for performance. Ready for production.
           </p>
 
-          {/* CTA Buttons */}
+          {/* Premium CTA Buttons */}
           <div className="fade-in-up delay-4" style={{
             display: 'flex',
-            gap: '1.25rem',
+            gap: '1.5rem',
             justifyContent: 'center',
             flexWrap: 'wrap',
-            marginBottom: '5rem'
+            marginBottom: '6rem'
           }}>
             <button
               onClick={() => router.push('/login')}
               style={{
-                padding: '1.125rem 2.5rem',
-                fontSize: '1.05rem',
-                fontWeight: '700',
-                background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+                padding: '1.25rem 3rem',
+                fontSize: '1.1rem',
+                fontWeight: '800',
+                background: `linear-gradient(135deg, ${theme.primary} 0%, ${theme.secondary} 100%)`,
                 color: 'white',
                 border: 'none',
-                borderRadius: '14px',
+                borderRadius: '16px',
                 cursor: 'pointer',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 8px 30px rgba(99, 102, 241, 0.4)',
-                letterSpacing: '0.5px'
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: `0 10px 40px ${theme.primary}60`,
+                letterSpacing: '0.5px',
+                position: 'relative',
+                overflow: 'hidden'
               }}
               onMouseEnter={(e) => {
-                e.target.style.transform = 'translateY(-3px)';
-                e.target.style.boxShadow = '0 12px 40px rgba(99, 102, 241, 0.6)';
+                e.target.style.transform = 'translateY(-4px) scale(1.02)';
+                e.target.style.boxShadow = `0 15px 50px ${theme.primary}80`;
               }}
               onMouseLeave={(e) => {
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 8px 30px rgba(99, 102, 241, 0.4)';
+                e.target.style.transform = 'translateY(0) scale(1)';
+                e.target.style.boxShadow = `0 10px 40px ${theme.primary}60`;
               }}
             >
               Launch Application →
@@ -240,159 +283,179 @@ export default function Home() {
             <button
               onClick={() => window.open('https://github.com/umemasultan/Phase_5', '_blank')}
               style={{
-                padding: '1.125rem 2.5rem',
-                fontSize: '1.05rem',
-                fontWeight: '700',
-                background: 'rgba(255, 255, 255, 0.05)',
-                color: 'white',
-                border: '1.5px solid rgba(255, 255, 255, 0.15)',
-                borderRadius: '14px',
+                padding: '1.25rem 3rem',
+                fontSize: '1.1rem',
+                fontWeight: '800',
+                background: darkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(59, 130, 246, 0.08)',
+                color: theme.text,
+                border: `2px solid ${theme.border}`,
+                borderRadius: '16px',
                 cursor: 'pointer',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                backdropFilter: 'blur(20px)',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                backdropFilter: 'blur(30px)',
                 letterSpacing: '0.5px'
               }}
               onMouseEnter={(e) => {
-                e.target.style.transform = 'translateY(-3px)';
-                e.target.style.background = 'rgba(255, 255, 255, 0.1)';
-                e.target.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                e.target.style.transform = 'translateY(-4px) scale(1.02)';
+                e.target.style.background = darkMode ? 'rgba(255, 255, 255, 0.12)' : 'rgba(59, 130, 246, 0.12)';
+                e.target.style.borderColor = theme.primary;
               }}
               onMouseLeave={(e) => {
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.background = 'rgba(255, 255, 255, 0.05)';
-                e.target.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+                e.target.style.transform = 'translateY(0) scale(1)';
+                e.target.style.background = darkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(59, 130, 246, 0.08)';
+                e.target.style.borderColor = theme.border;
               }}
             >
-              <span style={{ marginRight: '0.5rem' }}>⭐</span>
+              <span style={{ marginRight: '0.75rem' }}>⭐</span>
               View on GitHub
             </button>
           </div>
 
-          {/* Architecture Highlights */}
+          {/* Premium Architecture Cards */}
           <div className="fade-in-up delay-5" style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '2rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '2.5rem',
             width: '100%',
-            maxWidth: '1200px'
+            maxWidth: '1400px'
           }}>
             {[
               {
                 icon: '⚡',
-                title: 'Dapr Abstraction',
-                desc: 'Zero direct Kafka usage, complete abstraction layer',
-                color: '#6366f1'
+                title: 'Dapr Abstraction Layer',
+                desc: 'Complete abstraction over Kafka with zero direct dependencies. Production-ready building blocks.',
+                gradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)'
               },
               {
                 icon: '🔄',
                 title: '6 Microservices',
-                desc: 'Backend, Recurring, Notification, Audit, WebSocket, Frontend',
-                color: '#8b5cf6'
+                desc: 'Backend, Recurring, Notification, Audit, WebSocket, Frontend. Fully decoupled architecture.',
+                gradient: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)'
               },
               {
                 icon: '🚀',
-                title: 'Real-Time Sync',
-                desc: 'WebSocket live updates across all connected clients',
-                color: '#a78bfa'
+                title: 'Real-Time Collaboration',
+                desc: 'WebSocket live updates with instant synchronization across all connected clients.',
+                gradient: 'linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%)'
               },
               {
                 icon: '🔐',
                 title: 'Production Ready',
-                desc: 'Dapr Secrets, CI/CD, Kubernetes deployment',
-                color: '#c4b5fd'
+                desc: 'Dapr Secrets, complete CI/CD pipeline, Kubernetes deployment with Helm charts.',
+                gradient: 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)'
               }
             ].map((feature, i) => (
-              <div key={i} style={{
+              <div key={i} className="fade-in-up" style={{
+                animationDelay: `${1.2 + i * 0.15}s`,
+                opacity: 0,
                 background: theme.cardBg,
-                backdropFilter: 'blur(20px)',
-                padding: '2rem',
-                borderRadius: '20px',
-                border: `1px solid ${theme.border}`,
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                backdropFilter: 'blur(30px)',
+                padding: '2.5rem',
+                borderRadius: '24px',
+                border: `2px solid ${theme.border}`,
+                transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
                 cursor: 'pointer',
                 position: 'relative',
                 overflow: 'hidden'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-8px)';
-                e.currentTarget.style.boxShadow = `0 20px 60px ${feature.color}40`;
-                e.currentTarget.style.borderColor = feature.color;
+                e.currentTarget.style.transform = 'translateY(-12px)';
+                e.currentTarget.style.boxShadow = `0 25px 70px ${theme.primary}40`;
+                e.currentTarget.style.borderColor = theme.primary;
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = 'none';
                 e.currentTarget.style.borderColor = theme.border;
               }}>
-                {/* Glow effect */}
+                {/* Gradient Overlay */}
                 <div style={{
                   position: 'absolute',
-                  top: '-50%',
-                  left: '-50%',
-                  width: '200%',
-                  height: '200%',
-                  background: `radial-gradient(circle, ${feature.color}20 0%, transparent 70%)`,
-                  opacity: 0,
-                  transition: 'opacity 0.4s'
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: '4px',
+                  background: feature.gradient,
+                  opacity: 0.8
                 }} />
 
                 <div style={{
-                  fontSize: '3rem',
-                  marginBottom: '1.25rem',
-                  filter: `drop-shadow(0 0 20px ${feature.color}80)`
+                  fontSize: '3.5rem',
+                  marginBottom: '1.5rem',
+                  filter: `drop-shadow(0 0 20px ${theme.primary}80)`,
+                  transition: 'transform 0.5s'
                 }}>{feature.icon}</div>
 
                 <h3 style={{
-                  fontSize: '1.25rem',
-                  fontWeight: '700',
-                  margin: '0 0 0.75rem 0',
+                  fontSize: '1.4rem',
+                  fontWeight: '800',
+                  margin: '0 0 1rem 0',
                   color: theme.text,
                   letterSpacing: '-0.5px'
                 }}>{feature.title}</h3>
 
                 <p style={{
-                  fontSize: '0.95rem',
+                  fontSize: '1.05rem',
                   margin: 0,
-                  lineHeight: '1.6',
-                  color: theme.textMuted
+                  lineHeight: '1.7',
+                  color: theme.textMuted,
+                  fontWeight: '500'
                 }}>{feature.desc}</p>
               </div>
             ))}
           </div>
 
-          {/* Tech Stack */}
-          <div className="fade-in-up delay-5" style={{
-            marginTop: '5rem',
-            padding: '2rem',
-            background: 'rgba(99, 102, 241, 0.05)',
-            backdropFilter: 'blur(20px)',
-            borderRadius: '20px',
-            border: `1px solid ${theme.border}`,
-            maxWidth: '900px'
+          {/* Premium Tech Stack */}
+          <div className="fade-in-up delay-6" style={{
+            marginTop: '6rem',
+            padding: '3rem',
+            background: darkMode
+              ? 'linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(37, 99, 235, 0.08) 100%)'
+              : 'linear-gradient(135deg, rgba(59, 130, 246, 0.06) 0%, rgba(37, 99, 235, 0.06) 100%)',
+            backdropFilter: 'blur(30px)',
+            borderRadius: '28px',
+            border: `2px solid ${theme.border}`,
+            maxWidth: '1100px',
+            boxShadow: darkMode
+              ? '0 20px 60px rgba(59, 130, 246, 0.15)'
+              : '0 10px 40px rgba(59, 130, 246, 0.1)'
           }}>
             <h4 style={{
-              fontSize: '0.875rem',
-              fontWeight: '700',
-              letterSpacing: '2px',
+              fontSize: '1rem',
+              fontWeight: '800',
+              letterSpacing: '3px',
               textTransform: 'uppercase',
-              color: '#a5b4fc',
-              marginBottom: '1.5rem'
-            }}>Powered By</h4>
+              color: theme.primary,
+              marginBottom: '2rem'
+            }}>Powered By Enterprise Technologies</h4>
             <div style={{
               display: 'flex',
               flexWrap: 'wrap',
-              gap: '1.5rem',
+              gap: '1.25rem',
               justifyContent: 'center',
               alignItems: 'center'
             }}>
-              {['Dapr', 'Kafka', 'Kubernetes', 'PostgreSQL', 'FastAPI', 'Next.js', 'WebSocket', 'Helm'].map((tech, i) => (
+              {['Dapr', 'Kafka', 'Kubernetes', 'PostgreSQL', 'FastAPI', 'Next.js', 'WebSocket', 'Helm', 'Docker', 'Strimzi'].map((tech, i) => (
                 <span key={i} style={{
-                  padding: '0.5rem 1.25rem',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  borderRadius: '8px',
-                  fontSize: '0.9rem',
-                  fontWeight: '600',
+                  padding: '0.75rem 1.75rem',
+                  background: darkMode ? 'rgba(59, 130, 246, 0.12)' : 'rgba(59, 130, 246, 0.1)',
+                  borderRadius: '12px',
+                  fontSize: '1rem',
+                  fontWeight: '700',
                   color: theme.text,
-                  border: '1px solid rgba(255, 255, 255, 0.1)'
+                  border: `1.5px solid ${theme.border}`,
+                  transition: 'all 0.3s',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = `linear-gradient(135deg, ${theme.primary}20, ${theme.secondary}20)`;
+                  e.target.style.borderColor = theme.primary;
+                  e.target.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = darkMode ? 'rgba(59, 130, 246, 0.12)' : 'rgba(59, 130, 246, 0.1)';
+                  e.target.style.borderColor = theme.border;
+                  e.target.style.transform = 'translateY(0)';
                 }}>{tech}</span>
               ))}
             </div>
