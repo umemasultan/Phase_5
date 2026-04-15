@@ -24,29 +24,29 @@ export default function Home() {
 
   if (!mounted) return null;
 
-  // Consistent blue theme
+  // Consistent purple theme (TaskMaster Pro colors)
   const theme = darkMode ? {
-    primary: '#3b82f6',
-    primaryLight: '#60a5fa',
-    secondary: '#2563eb',
-    accent: '#1d4ed8',
-    background: '#0f172a',
-    backgroundGradient: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)',
-    cardBg: 'rgba(30, 41, 59, 0.7)',
+    primary: '#210F37',
+    primaryLight: '#3a1a5c',
+    secondary: '#433D8B',
+    accent: '#2E236C',
+    background: '#0a0818',
+    backgroundGradient: 'linear-gradient(135deg, #0a0818 0%, #17153B 50%, #2E236C 100%)',
+    cardBg: 'rgba(46, 35, 108, 0.7)',
     text: '#ffffff',
     textMuted: 'rgba(255, 255, 255, 0.75)',
-    border: 'rgba(59, 130, 246, 0.25)'
+    border: 'rgba(67, 61, 139, 0.25)'
   } : {
-    primary: '#3b82f6',
-    primaryLight: '#60a5fa',
-    secondary: '#2563eb',
-    accent: '#1d4ed8',
+    primary: '#210F37',
+    primaryLight: '#3a1a5c',
+    secondary: '#433D8B',
+    accent: '#2E236C',
     background: '#f8fafc',
-    backgroundGradient: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%)',
+    backgroundGradient: 'linear-gradient(135deg, #f8f7fc 0%, #eeecf7 50%, #e4e1f1 100%)',
     cardBg: 'rgba(255, 255, 255, 0.9)',
-    text: '#0f172a',
-    textMuted: 'rgba(15, 23, 42, 0.7)',
-    border: 'rgba(59, 130, 246, 0.2)'
+    text: '#1f2937',
+    textMuted: 'rgba(31, 41, 55, 0.7)',
+    border: 'rgba(67, 61, 139, 0.2)'
   };
 
   return (
@@ -96,8 +96,8 @@ export default function Home() {
         width: '800px',
         height: '800px',
         background: darkMode
-          ? 'radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%)'
-          : 'radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%)',
+          ? 'radial-gradient(circle, rgba(67, 61, 139, 0.2) 0%, transparent 70%)'
+          : 'radial-gradient(circle, rgba(67, 61, 139, 0.15) 0%, transparent 70%)',
         borderRadius: '50%',
         filter: 'blur(120px)',
         animation: 'float 20s ease-in-out infinite',
@@ -110,8 +110,8 @@ export default function Home() {
         width: '700px',
         height: '700px',
         background: darkMode
-          ? 'radial-gradient(circle, rgba(37, 99, 235, 0.18) 0%, transparent 70%)'
-          : 'radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, transparent 70%)',
+          ? 'radial-gradient(circle, rgba(46, 35, 108, 0.18) 0%, transparent 70%)'
+          : 'radial-gradient(circle, rgba(46, 35, 108, 0.12) 0%, transparent 70%)',
         borderRadius: '50%',
         filter: 'blur(120px)',
         animation: 'float 25s ease-in-out infinite reverse',
@@ -125,8 +125,8 @@ export default function Home() {
         width: '600px',
         height: '600px',
         background: darkMode
-          ? 'radial-gradient(circle, rgba(29, 78, 216, 0.15) 0%, transparent 70%)'
-          : 'radial-gradient(circle, rgba(29, 78, 216, 0.1) 0%, transparent 70%)',
+          ? 'radial-gradient(circle, rgba(33, 15, 55, 0.15) 0%, transparent 70%)'
+          : 'radial-gradient(circle, rgba(33, 15, 55, 0.1) 0%, transparent 70%)',
         borderRadius: '50%',
         filter: 'blur(100px)',
         animation: 'float 15s ease-in-out infinite',
