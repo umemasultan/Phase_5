@@ -81,8 +81,36 @@ export default function Home() {
           0% { background-position: -1000px 0; }
           100% { background-position: 1000px 0; }
         }
+        @keyframes rotate {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes scaleIn {
+          from { opacity: 0; transform: scale(0.8); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideInLeft {
+          from { opacity: 0; transform: translateX(-100px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInRight {
+          from { opacity: 0; transform: translateX(100px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
         .fade-in-up {
           animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          opacity: 0;
+        }
+        .scale-in {
+          animation: scaleIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          opacity: 0;
+        }
+        .slide-in-left {
+          animation: slideInLeft 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          opacity: 0;
+        }
+        .slide-in-right {
+          animation: slideInRight 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
           opacity: 0;
         }
         .delay-1 { animation-delay: 0.2s; }
@@ -92,20 +120,75 @@ export default function Home() {
         .delay-5 { animation-delay: 1s; }
         .delay-6 { animation-delay: 1.2s; }
         .delay-7 { animation-delay: 1.4s; }
+        .delay-8 { animation-delay: 1.6s; }
+
+        /* Responsive styles */
+        @media (max-width: 1024px) {
+          .hero-title { font-size: 4rem !important; letter-spacing: -2px !important; }
+          .hero-subtitle { font-size: 1.2rem !important; }
+          .hero-tagline { font-size: 1.3rem !important; }
+          .cta-button { padding: 1.2rem 2.5rem !important; font-size: 1rem !important; }
+          .tech-badge { padding: 1rem 2rem !important; font-size: 1rem !important; }
+        }
+
+        @media (max-width: 768px) {
+          .hero-title { font-size: 3rem !important; letter-spacing: -1.5px !important; margin-bottom: 2rem !important; }
+          .hero-subtitle { font-size: 1.1rem !important; margin-bottom: 2.5rem !important; }
+          .hero-tagline { font-size: 1.2rem !important; margin-top: 1rem !important; }
+          .premium-badge { padding: 0.9rem 2rem !important; gap: 1rem !important; font-size: 0.85rem !important; letter-spacing: 2px !important; margin-bottom: 2.5rem !important; }
+          .premium-badge span:first-child { font-size: 1.5rem !important; }
+          .cta-button { padding: 1rem 2rem !important; font-size: 0.95rem !important; }
+          .cta-buttons { gap: 1.25rem !important; margin-bottom: 4rem !important; }
+          .arch-card { padding: 2rem !important; }
+          .arch-card h3 { font-size: 1.3rem !important; }
+          .arch-card p { font-size: 0.95rem !important; }
+          .tech-section { padding: 3rem 2rem !important; margin-top: 5rem !important; }
+          .tech-badge { padding: 0.9rem 1.75rem !important; font-size: 0.95rem !important; gap: 1.25rem !important; }
+        }
+
+        @media (max-width: 480px) {
+          .hero-title { font-size: 2.2rem !important; letter-spacing: -1px !important; }
+          .hero-subtitle { font-size: 1rem !important; padding: 0 1rem !important; }
+          .hero-tagline { font-size: 1.1rem !important; }
+          .premium-badge { padding: 0.75rem 1.5rem !important; font-size: 0.7rem !important; letter-spacing: 1.5px !important; flex-direction: column !important; gap: 0.5rem !important; }
+          .premium-badge span:first-child { font-size: 1.25rem !important; }
+          .cta-button { padding: 0.9rem 1.75rem !important; font-size: 0.9rem !important; width: 100%; }
+          .cta-buttons { flex-direction: column !important; width: 100% !important; padding: 0 1rem !important; }
+          .arch-cards { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+          .arch-card { padding: 1.75rem !important; }
+          .arch-card-icon { font-size: 2.5rem !important; }
+          .tech-section { padding: 2.5rem 1.5rem !important; border-radius: 24px !important; }
+          .tech-section h4 { font-size: 0.9rem !important; letter-spacing: 2px !important; margin-bottom: 2rem !important; }
+          .tech-badge { padding: 0.8rem 1.5rem !important; font-size: 0.9rem !important; }
+        }
       `}</style>
 
-      {/* Ultra Premium Background Effects */}
+      {/* Ultra Premium Background Effects with Grid */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundImage: darkMode
+          ? 'linear-gradient(rgba(67, 61, 139, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(67, 61, 139, 0.03) 1px, transparent 1px)'
+          : 'linear-gradient(rgba(67, 61, 139, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(67, 61, 139, 0.02) 1px, transparent 1px)',
+        backgroundSize: '100px 100px',
+        opacity: 0.4,
+        zIndex: 0
+      }} />
+
       <div style={{
         position: 'absolute',
         top: '-40%',
         right: '-20%',
-        width: '1000px',
-        height: '1000px',
+        width: '1200px',
+        height: '1200px',
         background: darkMode
-          ? 'radial-gradient(circle, rgba(67, 61, 139, 0.25) 0%, rgba(46, 35, 108, 0.15) 40%, transparent 70%)'
-          : 'radial-gradient(circle, rgba(67, 61, 139, 0.18) 0%, transparent 70%)',
+          ? 'radial-gradient(circle, rgba(67, 61, 139, 0.3) 0%, rgba(46, 35, 108, 0.2) 40%, transparent 70%)'
+          : 'radial-gradient(circle, rgba(67, 61, 139, 0.2) 0%, transparent 70%)',
         borderRadius: '50%',
-        filter: 'blur(150px)',
+        filter: 'blur(180px)',
         animation: 'float 25s ease-in-out infinite',
         zIndex: 0
       }} />
@@ -113,13 +196,13 @@ export default function Home() {
         position: 'absolute',
         bottom: '-40%',
         left: '-20%',
-        width: '900px',
-        height: '900px',
+        width: '1100px',
+        height: '1100px',
         background: darkMode
-          ? 'radial-gradient(circle, rgba(46, 35, 108, 0.22) 0%, rgba(33, 15, 55, 0.12) 40%, transparent 70%)'
-          : 'radial-gradient(circle, rgba(46, 35, 108, 0.15) 0%, transparent 70%)',
+          ? 'radial-gradient(circle, rgba(46, 35, 108, 0.28) 0%, rgba(33, 15, 55, 0.15) 40%, transparent 70%)'
+          : 'radial-gradient(circle, rgba(46, 35, 108, 0.18) 0%, transparent 70%)',
         borderRadius: '50%',
-        filter: 'blur(150px)',
+        filter: 'blur(180px)',
         animation: 'float 30s ease-in-out infinite reverse',
         zIndex: 0
       }} />
@@ -128,14 +211,40 @@ export default function Home() {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: '800px',
-        height: '800px',
+        width: '1000px',
+        height: '1000px',
         background: darkMode
-          ? 'radial-gradient(circle, rgba(33, 15, 55, 0.18) 0%, transparent 70%)'
-          : 'radial-gradient(circle, rgba(33, 15, 55, 0.12) 0%, transparent 70%)',
+          ? 'radial-gradient(circle, rgba(33, 15, 55, 0.22) 0%, transparent 70%)'
+          : 'radial-gradient(circle, rgba(33, 15, 55, 0.15) 0%, transparent 70%)',
         borderRadius: '50%',
-        filter: 'blur(120px)',
+        filter: 'blur(150px)',
         animation: 'float 20s ease-in-out infinite, pulse 8s ease-in-out infinite',
+        zIndex: 0
+      }} />
+
+      {/* Floating geometric shapes */}
+      <div style={{
+        position: 'absolute',
+        top: '15%',
+        left: '10%',
+        width: '300px',
+        height: '300px',
+        border: `2px solid ${theme.border}`,
+        borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
+        animation: 'float 35s ease-in-out infinite, rotate 60s linear infinite',
+        opacity: 0.15,
+        zIndex: 0
+      }} />
+      <div style={{
+        position: 'absolute',
+        bottom: '20%',
+        right: '15%',
+        width: '250px',
+        height: '250px',
+        border: `2px solid ${theme.border}`,
+        borderRadius: '70% 30% 30% 70% / 70% 70% 30% 30%',
+        animation: 'float 40s ease-in-out infinite reverse, rotate 80s linear infinite reverse',
+        opacity: 0.12,
         zIndex: 0
       }} />
 
@@ -155,83 +264,113 @@ export default function Home() {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          textAlign: 'center'
+          textAlign: 'center',
+          padding: '2rem 0'
         }}>
-          {/* Ultra Premium Badge */}
-          <div className="fade-in-up delay-1" style={{
+          {/* Ultra Premium Badge with Glow */}
+          <div className="scale-in delay-1 premium-badge" style={{
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '1.25rem',
+            gap: '1.5rem',
             background: darkMode
-              ? 'linear-gradient(135deg, rgba(67, 61, 139, 0.2) 0%, rgba(46, 35, 108, 0.2) 100%)'
-              : 'linear-gradient(135deg, rgba(67, 61, 139, 0.12) 0%, rgba(46, 35, 108, 0.12) 100%)',
-            backdropFilter: 'blur(40px)',
-            padding: '1rem 2.5rem',
+              ? 'linear-gradient(135deg, rgba(67, 61, 139, 0.25) 0%, rgba(46, 35, 108, 0.25) 100%)'
+              : 'linear-gradient(135deg, rgba(67, 61, 139, 0.15) 0%, rgba(46, 35, 108, 0.15) 100%)',
+            backdropFilter: 'blur(50px)',
+            padding: '1.2rem 3rem',
             borderRadius: '100px',
-            border: `2px solid ${theme.border}`,
-            marginBottom: '3.5rem',
+            border: `2.5px solid ${theme.border}`,
+            marginBottom: '4rem',
             boxShadow: darkMode
-              ? '0 10px 40px rgba(67, 61, 139, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-              : '0 6px 30px rgba(67, 61, 139, 0.2)'
+              ? `0 15px 50px rgba(67, 61, 139, 0.4), 0 0 80px ${theme.primary}30, inset 0 1px 0 rgba(255, 255, 255, 0.15)`
+              : '0 8px 40px rgba(67, 61, 139, 0.25)',
+            position: 'relative',
+            overflow: 'hidden'
           }}>
+            {/* Animated shimmer effect */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: '-100%',
+              width: '100%',
+              height: '100%',
+              background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent)',
+              animation: 'shimmer 3s infinite'
+            }} />
             <span style={{
-              fontSize: '1.75rem',
-              filter: `drop-shadow(0 0 15px ${theme.primary})`
+              fontSize: '2rem',
+              filter: `drop-shadow(0 0 20px ${theme.primary})`,
+              animation: 'pulse 3s ease-in-out infinite'
             }}>🚀</span>
             <span style={{
-              fontSize: '1rem',
+              fontSize: '1.05rem',
               fontWeight: '900',
-              letterSpacing: '2.5px',
+              letterSpacing: '3px',
               background: `linear-gradient(135deg, ${theme.primary} 0%, ${theme.primaryLight} 50%, ${theme.secondary} 100%)`,
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-              textTransform: 'uppercase'
+              textTransform: 'uppercase',
+              position: 'relative',
+              zIndex: 1
             }}>
               Phase V Hackathon 2026 • Enterprise Edition
             </span>
           </div>
 
-          {/* Ultra Large Hero Heading */}
-          <h1 className="fade-in-up delay-2" style={{
-            fontSize: '6.5rem',
+          {/* Hero Heading with Enhanced Effects */}
+          <h1 className="fade-in-up delay-2 hero-title" style={{
+            fontSize: '5.5rem',
             fontWeight: '900',
             margin: '0 0 3rem 0',
-            lineHeight: '1',
-            letterSpacing: '-5px',
+            lineHeight: '1.05',
+            letterSpacing: '-4px',
             maxWidth: '1400px',
             color: theme.text,
-            textShadow: darkMode ? '0 0 80px rgba(67, 61, 139, 0.5)' : 'none'
+            textShadow: darkMode ? `0 0 80px rgba(67, 61, 139, 0.5), 0 0 40px ${theme.primary}40` : 'none',
+            position: 'relative'
           }}>
             Next-Generation
             <br/>
             <span style={{
-              background: `linear-gradient(135deg, ${theme.primary} 0%, ${theme.primaryLight} 30%, ${theme.secondary} 60%, ${theme.accent} 100%)`,
+              background: `linear-gradient(135deg, ${theme.primary} 0%, ${theme.primaryLight} 25%, ${theme.secondary} 50%, ${theme.accent} 75%, ${theme.primary} 100%)`,
+              backgroundSize: '200% auto',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               position: 'relative',
-              display: 'inline-block'
+              display: 'inline-block',
+              animation: 'shimmer 4s linear infinite'
             }}>
               Event-Driven Architecture
-              {/* Animated underline */}
+              {/* Multi-layer animated underline */}
               <div style={{
                 position: 'absolute',
-                bottom: '-15px',
-                left: '5%',
-                right: '5%',
+                bottom: '-18px',
+                left: '3%',
+                right: '3%',
                 height: '8px',
-                background: `linear-gradient(90deg, transparent, ${theme.primary}, ${theme.secondary}, ${theme.primary}, transparent)`,
+                background: `linear-gradient(90deg, transparent, ${theme.primary}, ${theme.secondary}, ${theme.accent}, ${theme.primary}, transparent)`,
                 borderRadius: '4px',
                 opacity: 0.7,
-                boxShadow: `0 0 20px ${theme.primary}`
+                boxShadow: `0 0 25px ${theme.primary}, 0 0 50px ${theme.primary}40`,
+                animation: 'pulse 3s ease-in-out infinite'
+              }} />
+              <div style={{
+                position: 'absolute',
+                bottom: '-28px',
+                left: '8%',
+                right: '8%',
+                height: '4px',
+                background: `linear-gradient(90deg, transparent, ${theme.secondary}60, transparent)`,
+                borderRadius: '2px',
+                opacity: 0.5
               }} />
             </span>
           </h1>
 
-          {/* Premium Subtitle with Highlights */}
-          <p className="fade-in-up delay-3" style={{
-            fontSize: '1.65rem',
-            margin: '0 auto 4.5rem',
-            maxWidth: '1000px',
+          {/* Enhanced Subtitle with Badges */}
+          <p className="fade-in-up delay-3 hero-subtitle" style={{
+            fontSize: '1.45rem',
+            margin: '0 auto 4rem',
+            maxWidth: '1050px',
             fontWeight: '500',
             lineHeight: '1.9',
             color: theme.textMuted
@@ -240,84 +379,96 @@ export default function Home() {
             <span style={{
               color: theme.primary,
               fontWeight: '800',
-              background: darkMode ? 'rgba(67, 61, 139, 0.2)' : 'rgba(67, 61, 139, 0.1)',
-              padding: '0.25rem 0.75rem',
-              borderRadius: '8px',
-              border: `1px solid ${theme.border}`
+              transition: 'all 0.3s'
             }}>Dapr abstraction</span>,{' '}
             <span style={{
               color: theme.primary,
               fontWeight: '800',
-              background: darkMode ? 'rgba(67, 61, 139, 0.2)' : 'rgba(67, 61, 139, 0.1)',
-              padding: '0.25rem 0.75rem',
-              borderRadius: '8px',
-              border: `1px solid ${theme.border}`
+              transition: 'all 0.3s'
             }}>Kafka streaming</span>, and{' '}
             <span style={{
               color: theme.primary,
               fontWeight: '800',
-              background: darkMode ? 'rgba(67, 61, 139, 0.2)' : 'rgba(67, 61, 139, 0.1)',
-              padding: '0.25rem 0.75rem',
-              borderRadius: '8px',
-              border: `1px solid ${theme.border}`
+              transition: 'all 0.3s'
             }}>real-time WebSocket</span>.
             <br/>
-            <strong style={{ color: theme.text, fontWeight: '700' }}>
+            <strong className="hero-tagline" style={{
+              color: theme.text,
+              fontWeight: '700',
+              fontSize: '1.5rem',
+              display: 'block',
+              marginTop: '1.5rem',
+              letterSpacing: '-0.5px'
+            }}>
               Built for scale. Designed for performance. Ready for production.
             </strong>
           </p>
 
-          {/* Ultra Premium CTA Buttons */}
-          <div className="fade-in-up delay-4" style={{
+          {/* Enhanced CTA Buttons with Advanced Effects */}
+          <div className="fade-in-up delay-4 cta-buttons" style={{
             display: 'flex',
             gap: '2rem',
             justifyContent: 'center',
             flexWrap: 'wrap',
-            marginBottom: '7rem'
+            marginBottom: '6rem'
           }}>
             <button
+              className="cta-button"
               onClick={() => router.push('/login')}
               style={{
-                padding: '1.5rem 3.5rem',
-                fontSize: '1.2rem',
-                fontWeight: '900',
+                padding: '1.4rem 3.5rem',
+                fontSize: '1.15rem',
+                fontWeight: '800',
                 background: `linear-gradient(135deg, ${theme.primary} 0%, ${theme.primaryLight} 50%, ${theme.secondary} 100%)`,
                 color: 'white',
                 border: 'none',
-                borderRadius: '18px',
+                borderRadius: '16px',
                 cursor: 'pointer',
-                transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: `0 15px 50px ${theme.primary}70, inset 0 1px 0 rgba(255, 255, 255, 0.2)`,
-                letterSpacing: '1px',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: `0 15px 45px ${theme.primary}70, 0 0 60px ${theme.primary}30, inset 0 1px 0 rgba(255, 255, 255, 0.2)`,
+                letterSpacing: '0.5px',
                 position: 'relative',
                 overflow: 'hidden'
               }}
               onMouseEnter={(e) => {
                 e.target.style.transform = 'translateY(-6px) scale(1.03)';
-                e.target.style.boxShadow = `0 20px 60px ${theme.primary}90, inset 0 1px 0 rgba(255, 255, 255, 0.3)`;
+                e.target.style.boxShadow = `0 20px 60px ${theme.primary}90, 0 0 80px ${theme.primary}50, inset 0 1px 0 rgba(255, 255, 255, 0.3)`;
               }}
               onMouseLeave={(e) => {
                 e.target.style.transform = 'translateY(0) scale(1)';
-                e.target.style.boxShadow = `0 15px 50px ${theme.primary}70, inset 0 1px 0 rgba(255, 255, 255, 0.2)`;
+                e.target.style.boxShadow = `0 15px 45px ${theme.primary}70, 0 0 60px ${theme.primary}30, inset 0 1px 0 rgba(255, 255, 255, 0.2)`;
               }}
             >
-              Launch Application →
+              <span style={{ position: 'relative', zIndex: 1 }}>Launch Application →</span>
+              {/* Shimmer overlay */}
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: '-100%',
+                width: '100%',
+                height: '100%',
+                background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)',
+                animation: 'shimmer 3s infinite'
+              }} />
             </button>
             <button
+              className="cta-button"
               onClick={() => window.open('https://github.com/umemasultan/Phase_5', '_blank')}
               style={{
-                padding: '1.5rem 3.5rem',
-                fontSize: '1.2rem',
-                fontWeight: '900',
+                padding: '1.4rem 3.5rem',
+                fontSize: '1.15rem',
+                fontWeight: '800',
                 background: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(33, 15, 55, 0.08)',
                 color: theme.text,
                 border: `2.5px solid ${theme.border}`,
-                borderRadius: '18px',
+                borderRadius: '16px',
                 cursor: 'pointer',
-                transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                 backdropFilter: 'blur(40px)',
-                letterSpacing: '1px',
-                boxShadow: darkMode ? 'inset 0 1px 0 rgba(255, 255, 255, 0.1)' : 'none'
+                letterSpacing: '0.5px',
+                boxShadow: darkMode ? 'inset 0 1px 0 rgba(255, 255, 255, 0.1)' : 'none',
+                position: 'relative',
+                overflow: 'hidden'
               }}
               onMouseEnter={(e) => {
                 e.target.style.transform = 'translateY(-6px) scale(1.03)';
@@ -332,16 +483,16 @@ export default function Home() {
                 e.target.style.boxShadow = darkMode ? 'inset 0 1px 0 rgba(255, 255, 255, 0.1)' : 'none';
               }}
             >
-              <span style={{ marginRight: '1rem', fontSize: '1.3rem' }}>⭐</span>
+              <span style={{ marginRight: '0.75rem', fontSize: '1.25rem' }}>⭐</span>
               View on GitHub
             </button>
           </div>
 
-          {/* Ultra Premium Architecture Cards */}
-          <div className="fade-in-up delay-5" style={{
+          {/* Premium Architecture Cards with Advanced Hover Effects */}
+          <div className="fade-in-up delay-5 arch-cards" style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-            gap: '3rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '2.5rem',
             width: '100%',
             maxWidth: '1500px'
           }}>
@@ -351,39 +502,43 @@ export default function Home() {
                 title: 'Dapr Abstraction Layer',
                 desc: 'Complete abstraction over Kafka with zero direct dependencies. Production-ready building blocks for distributed systems.',
                 gradient: `linear-gradient(135deg, ${theme.primary} 0%, ${theme.primaryLight} 100%)`,
-                stats: '100% Abstracted'
+                stats: '100% Abstracted',
+                color: theme.primary
               },
               {
                 icon: '🔄',
                 title: '6 Microservices',
                 desc: 'Backend, Recurring, Notification, Audit, WebSocket, Frontend. Fully decoupled architecture with event-driven communication.',
                 gradient: `linear-gradient(135deg, ${theme.primaryLight} 0%, ${theme.secondary} 100%)`,
-                stats: '6 Services'
+                stats: '6 Services',
+                color: theme.primaryLight
               },
               {
                 icon: '🚀',
                 title: 'Real-Time Collaboration',
                 desc: 'WebSocket live updates with instant synchronization across all connected clients. Sub-second latency guaranteed.',
                 gradient: `linear-gradient(135deg, ${theme.secondary} 0%, ${theme.accent} 100%)`,
-                stats: '<1s Latency'
+                stats: '<1s Latency',
+                color: theme.secondary
               },
               {
                 icon: '🔐',
                 title: 'Production Ready',
                 desc: 'Dapr Secrets management, complete CI/CD pipeline, Kubernetes deployment with Helm charts. Enterprise-grade security.',
                 gradient: `linear-gradient(135deg, ${theme.accent} 0%, ${theme.primary} 100%)`,
-                stats: 'Enterprise Grade'
+                stats: 'Enterprise Grade',
+                color: theme.accent
               }
             ].map((feature, i) => (
-              <div key={i} className="fade-in-up" style={{
-                animationDelay: `${1.4 + i * 0.2}s`,
+              <div key={i} className="scale-in arch-card" style={{
+                animationDelay: `${1.2 + i * 0.15}s`,
                 opacity: 0,
                 background: theme.cardBg,
                 backdropFilter: 'blur(40px)',
-                padding: '3rem',
-                borderRadius: '28px',
+                padding: '2.5rem',
+                borderRadius: '24px',
                 border: `2.5px solid ${theme.border}`,
-                transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
                 cursor: 'pointer',
                 position: 'relative',
                 overflow: 'hidden',
@@ -392,9 +547,9 @@ export default function Home() {
                   : '0 6px 30px rgba(0, 0, 0, 0.08)'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-15px) scale(1.02)';
-                e.currentTarget.style.boxShadow = `0 30px 80px ${theme.primary}50`;
-                e.currentTarget.style.borderColor = theme.primary;
+                e.currentTarget.style.transform = 'translateY(-12px) scale(1.02)';
+                e.currentTarget.style.boxShadow = `0 25px 80px ${feature.color}50, 0 0 60px ${feature.color}30`;
+                e.currentTarget.style.borderColor = feature.color;
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0) scale(1)';
@@ -403,7 +558,7 @@ export default function Home() {
                   : '0 6px 30px rgba(0, 0, 0, 0.08)';
                 e.currentTarget.style.borderColor = theme.border;
               }}>
-                {/* Top gradient bar */}
+                {/* Animated gradient bar */}
                 <div style={{
                   position: 'absolute',
                   top: 0,
@@ -411,44 +566,63 @@ export default function Home() {
                   right: 0,
                   height: '5px',
                   background: feature.gradient,
-                  opacity: 0.9
+                  opacity: 0.9,
+                  boxShadow: `0 0 20px ${feature.color}60`
                 }} />
 
-                {/* Stats badge */}
+                {/* Glow effect on hover */}
+                <div style={{
+                  position: 'absolute',
+                  top: '-50%',
+                  left: '-50%',
+                  width: '200%',
+                  height: '200%',
+                  background: `radial-gradient(circle, ${feature.color}15 0%, transparent 70%)`,
+                  opacity: 0,
+                  transition: 'opacity 0.5s',
+                  pointerEvents: 'none'
+                }} className="card-glow" />
+
+                {/* Stats badge with enhanced styling */}
                 <div style={{
                   position: 'absolute',
                   top: '1.5rem',
                   right: '1.5rem',
                   padding: '0.5rem 1rem',
                   background: darkMode ? 'rgba(67, 61, 139, 0.3)' : 'rgba(67, 61, 139, 0.15)',
+                  backdropFilter: 'blur(20px)',
                   borderRadius: '100px',
                   fontSize: '0.75rem',
-                  fontWeight: '800',
-                  color: theme.primary,
-                  border: `1px solid ${theme.border}`
+                  fontWeight: '900',
+                  color: feature.color,
+                  border: `1.5px solid ${theme.border}`,
+                  boxShadow: darkMode ? `0 0 15px ${feature.color}30` : 'none',
+                  letterSpacing: '0.5px'
                 }}>
                   {feature.stats}
                 </div>
 
-                <div style={{
-                  fontSize: '4rem',
-                  marginBottom: '2rem',
-                  filter: `drop-shadow(0 0 25px ${theme.primary})`,
-                  transition: 'transform 0.6s'
+                <div className="arch-card-icon" style={{
+                  fontSize: '3.5rem',
+                  marginBottom: '1.75rem',
+                  filter: `drop-shadow(0 0 25px ${feature.color})`,
+                  transition: 'transform 0.5s',
+                  display: 'inline-block'
                 }}>{feature.icon}</div>
 
                 <h3 style={{
-                  fontSize: '1.6rem',
-                  fontWeight: '900',
+                  fontSize: '1.5rem',
+                  fontWeight: '800',
                   margin: '0 0 1.25rem 0',
                   color: theme.text,
-                  letterSpacing: '-1px'
+                  letterSpacing: '-0.5px',
+                  lineHeight: '1.3'
                 }}>{feature.title}</h3>
 
                 <p style={{
-                  fontSize: '1.1rem',
+                  fontSize: '1rem',
                   margin: 0,
-                  lineHeight: '1.8',
+                  lineHeight: '1.75',
                   color: theme.textMuted,
                   fontWeight: '500'
                 }}>{feature.desc}</p>
@@ -456,64 +630,115 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Ultra Premium Tech Stack */}
-          <div className="fade-in-up delay-7" style={{
-            marginTop: '7rem',
-            padding: '3.5rem',
+          {/* Ultra Premium Tech Stack Section */}
+          <div className="scale-in delay-7 tech-section" style={{
+            marginTop: '8rem',
+            padding: '4rem 3rem',
             background: darkMode
-              ? 'linear-gradient(135deg, rgba(67, 61, 139, 0.15) 0%, rgba(46, 35, 108, 0.15) 100%)'
-              : 'linear-gradient(135deg, rgba(67, 61, 139, 0.1) 0%, rgba(46, 35, 108, 0.1) 100%)',
-            backdropFilter: 'blur(40px)',
-            borderRadius: '32px',
-            border: `2.5px solid ${theme.border}`,
-            maxWidth: '1200px',
+              ? 'linear-gradient(135deg, rgba(67, 61, 139, 0.2) 0%, rgba(46, 35, 108, 0.2) 100%)'
+              : 'linear-gradient(135deg, rgba(67, 61, 139, 0.12) 0%, rgba(46, 35, 108, 0.12) 100%)',
+            backdropFilter: 'blur(50px)',
+            borderRadius: '36px',
+            border: `3px solid ${theme.border}`,
+            maxWidth: '1300px',
             boxShadow: darkMode
-              ? '0 25px 70px rgba(67, 61, 139, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-              : '0 15px 50px rgba(67, 61, 139, 0.15)'
+              ? `0 30px 90px rgba(67, 61, 139, 0.25), 0 0 100px ${theme.primary}20, inset 0 1px 0 rgba(255, 255, 255, 0.15)`
+              : '0 20px 60px rgba(67, 61, 139, 0.2)',
+            position: 'relative',
+            overflow: 'hidden'
           }}>
+            {/* Animated background pattern */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundImage: darkMode
+                ? 'radial-gradient(circle at 20% 50%, rgba(67, 61, 139, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(46, 35, 108, 0.1) 0%, transparent 50%)'
+                : 'radial-gradient(circle at 20% 50%, rgba(67, 61, 139, 0.06) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(46, 35, 108, 0.06) 0%, transparent 50%)',
+              opacity: 0.6,
+              pointerEvents: 'none'
+            }} />
+
             <h4 style={{
-              fontSize: '1.1rem',
+              fontSize: '1.2rem',
               fontWeight: '900',
-              letterSpacing: '3px',
+              letterSpacing: '3.5px',
               textTransform: 'uppercase',
               color: theme.primary,
-              marginBottom: '2.5rem',
-              textShadow: darkMode ? `0 0 20px ${theme.primary}` : 'none'
+              marginBottom: '3rem',
+              textShadow: darkMode ? `0 0 30px ${theme.primary}60` : 'none',
+              position: 'relative',
+              zIndex: 1
             }}>Powered By Enterprise Technologies</h4>
+
             <div style={{
               display: 'flex',
               flexWrap: 'wrap',
-              gap: '1.5rem',
+              gap: '1.75rem',
               justifyContent: 'center',
-              alignItems: 'center'
+              alignItems: 'center',
+              position: 'relative',
+              zIndex: 1
             }}>
               {['Dapr', 'Kafka', 'Kubernetes', 'PostgreSQL', 'FastAPI', 'Next.js', 'WebSocket', 'Helm', 'Docker', 'Strimzi'].map((tech, i) => (
-                <span key={i} style={{
-                  padding: '1rem 2rem',
-                  background: darkMode ? 'rgba(67, 61, 139, 0.2)' : 'rgba(67, 61, 139, 0.12)',
-                  borderRadius: '14px',
-                  fontSize: '1.05rem',
+                <span key={i} className="tech-badge" style={{
+                  padding: '1.2rem 2.5rem',
+                  background: darkMode ? 'rgba(67, 61, 139, 0.25)' : 'rgba(67, 61, 139, 0.15)',
+                  backdropFilter: 'blur(20px)',
+                  borderRadius: '16px',
+                  fontSize: '1.1rem',
                   fontWeight: '800',
                   color: theme.text,
-                  border: `2px solid ${theme.border}`,
-                  transition: 'all 0.4s',
+                  border: `2.5px solid ${theme.border}`,
+                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   cursor: 'pointer',
-                  boxShadow: darkMode ? 'inset 0 1px 0 rgba(255, 255, 255, 0.1)' : 'none'
+                  boxShadow: darkMode ? 'inset 0 1px 0 rgba(255, 255, 255, 0.12)' : 'none',
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.background = `linear-gradient(135deg, ${theme.primary}30, ${theme.secondary}30)`;
+                  e.target.style.background = `linear-gradient(135deg, ${theme.primary}40, ${theme.secondary}40)`;
                   e.target.style.borderColor = theme.primary;
-                  e.target.style.transform = 'translateY(-4px) scale(1.05)';
-                  e.target.style.boxShadow = `0 10px 30px ${theme.primary}40`;
+                  e.target.style.transform = 'translateY(-6px) scale(1.08)';
+                  e.target.style.boxShadow = `0 15px 40px ${theme.primary}50, 0 0 30px ${theme.primary}30`;
+                  e.target.style.color = darkMode ? '#ffffff' : theme.primary;
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.background = darkMode ? 'rgba(67, 61, 139, 0.2)' : 'rgba(67, 61, 139, 0.12)';
+                  e.target.style.background = darkMode ? 'rgba(67, 61, 139, 0.25)' : 'rgba(67, 61, 139, 0.15)';
                   e.target.style.borderColor = theme.border;
                   e.target.style.transform = 'translateY(0) scale(1)';
-                  e.target.style.boxShadow = darkMode ? 'inset 0 1px 0 rgba(255, 255, 255, 0.1)' : 'none';
-                }}>{tech}</span>
+                  e.target.style.boxShadow = darkMode ? 'inset 0 1px 0 rgba(255, 255, 255, 0.12)' : 'none';
+                  e.target.style.color = theme.text;
+                }}>
+                  {tech}
+                  {/* Shimmer effect */}
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: '-100%',
+                    width: '100%',
+                    height: '100%',
+                    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent)',
+                    animation: 'shimmer 4s infinite',
+                    animationDelay: `${i * 0.2}s`
+                  }} />
+                </span>
               ))}
             </div>
+
+            {/* Bottom decorative line */}
+            <div style={{
+              position: 'absolute',
+              bottom: 0,
+              left: '10%',
+              right: '10%',
+              height: '3px',
+              background: `linear-gradient(90deg, transparent, ${theme.primary}, ${theme.secondary}, ${theme.primary}, transparent)`,
+              opacity: 0.5,
+              borderRadius: '3px'
+            }} />
           </div>
         </div>
       </main>
