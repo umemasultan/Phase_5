@@ -175,7 +175,15 @@ export default function Home() {
           .tech-section { padding: 2rem 1rem !important; }
           .tech-badge { padding: 0.7rem 1rem !important; font-size: 0.8rem !important; }
         }
-      `}</style></style>
+
+        /* Main container responsive padding */
+        @media (max-width: 768px) {
+          main { padding: 0 1.5rem !important; }
+        }
+        @media (max-width: 480px) {
+          main { padding: 0 1rem !important; }
+        }
+      `}</style>
 
       {/* Ultra Premium Background Effects with Grid */}
       <div style={{
@@ -272,14 +280,6 @@ export default function Home() {
         position: 'relative',
         zIndex: 1
       }}>
-        <style jsx>{`
-          @media (max-width: 768px) {
-            main { padding: 0 1.5rem !important; }
-          }
-          @media (max-width: 480px) {
-            main { padding: 0 1rem !important; }
-          }
-        `}</style>
         <div style={{
           minHeight: '95vh',
           display: 'flex',
