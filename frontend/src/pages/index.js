@@ -132,36 +132,50 @@ export default function Home() {
         }
 
         @media (max-width: 768px) {
-          .hero-title { font-size: 3rem !important; letter-spacing: -1.5px !important; margin-bottom: 2rem !important; }
-          .hero-subtitle { font-size: 1.1rem !important; margin-bottom: 2.5rem !important; }
-          .hero-tagline { font-size: 1.2rem !important; margin-top: 1rem !important; }
-          .premium-badge { padding: 0.9rem 2rem !important; gap: 1rem !important; font-size: 0.85rem !important; letter-spacing: 2px !important; margin-bottom: 2.5rem !important; }
+          .hero-title { font-size: 2.8rem !important; letter-spacing: -1.5px !important; margin-bottom: 2rem !important; }
+          .hero-subtitle { font-size: 1.05rem !important; margin-bottom: 2.5rem !important; padding: 0 1rem !important; }
+          .hero-tagline { font-size: 1.15rem !important; margin-top: 1rem !important; }
+          .premium-badge { padding: 0.9rem 2rem !important; gap: 1rem !important; font-size: 0.8rem !important; letter-spacing: 2px !important; margin-bottom: 2.5rem !important; }
           .premium-badge span:first-child { font-size: 1.5rem !important; }
           .cta-button { padding: 1rem 2rem !important; font-size: 0.95rem !important; }
           .cta-buttons { gap: 1.25rem !important; margin-bottom: 4rem !important; }
           .arch-card { padding: 2rem !important; }
           .arch-card h3 { font-size: 1.3rem !important; }
           .arch-card p { font-size: 0.95rem !important; }
+          .arch-cards { gap: 2rem !important; }
           .tech-section { padding: 3rem 2rem !important; margin-top: 5rem !important; }
           .tech-badge { padding: 0.9rem 1.75rem !important; font-size: 0.95rem !important; gap: 1.25rem !important; }
         }
 
         @media (max-width: 480px) {
-          .hero-title { font-size: 2.2rem !important; letter-spacing: -1px !important; }
-          .hero-subtitle { font-size: 1rem !important; padding: 0 1rem !important; }
-          .hero-tagline { font-size: 1.1rem !important; }
-          .premium-badge { padding: 0.75rem 1.5rem !important; font-size: 0.7rem !important; letter-spacing: 1.5px !important; flex-direction: column !important; gap: 0.5rem !important; }
+          .hero-title { font-size: 2rem !important; letter-spacing: -0.5px !important; line-height: 1.2 !important; }
+          .hero-subtitle { font-size: 0.95rem !important; padding: 0 0.5rem !important; line-height: 1.7 !important; }
+          .hero-tagline { font-size: 1rem !important; margin-top: 1rem !important; }
+          .premium-badge { padding: 0.7rem 1.25rem !important; font-size: 0.65rem !important; letter-spacing: 1.5px !important; gap: 0.75rem !important; margin-bottom: 2rem !important; }
           .premium-badge span:first-child { font-size: 1.25rem !important; }
-          .cta-button { padding: 0.9rem 1.75rem !important; font-size: 0.9rem !important; width: 100%; }
-          .cta-buttons { flex-direction: column !important; width: 100% !important; padding: 0 1rem !important; }
-          .arch-cards { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+          .cta-button { padding: 0.9rem 1.5rem !important; font-size: 0.85rem !important; width: 100%; max-width: 280px; }
+          .cta-buttons { flex-direction: column !important; width: 100% !important; padding: 0 1rem !important; align-items: center !important; gap: 1rem !important; }
+          .arch-cards { grid-template-columns: 1fr !important; gap: 1.5rem !important; padding: 0 0.5rem !important; }
           .arch-card { padding: 1.75rem !important; }
-          .arch-card-icon { font-size: 2.5rem !important; }
-          .tech-section { padding: 2.5rem 1.5rem !important; border-radius: 24px !important; }
-          .tech-section h4 { font-size: 0.9rem !important; letter-spacing: 2px !important; margin-bottom: 2rem !important; }
-          .tech-badge { padding: 0.8rem 1.5rem !important; font-size: 0.9rem !important; }
+          .arch-card-icon { font-size: 2.5rem !important; margin-bottom: 1.25rem !important; }
+          .arch-card h3 { font-size: 1.2rem !important; }
+          .arch-card p { font-size: 0.9rem !important; line-height: 1.6 !important; }
+          .tech-section { padding: 2.5rem 1.25rem !important; border-radius: 24px !important; margin-top: 4rem !important; }
+          .tech-section h4 { font-size: 0.85rem !important; letter-spacing: 2px !important; margin-bottom: 2rem !important; }
+          .tech-badge { padding: 0.75rem 1.25rem !important; font-size: 0.85rem !important; }
         }
-      `}</style>
+
+        @media (max-width: 360px) {
+          .hero-title { font-size: 1.75rem !important; }
+          .hero-subtitle { font-size: 0.9rem !important; }
+          .hero-tagline { font-size: 0.95rem !important; }
+          .premium-badge { padding: 0.6rem 1rem !important; font-size: 0.6rem !important; }
+          .cta-button { padding: 0.85rem 1.25rem !important; font-size: 0.8rem !important; }
+          .arch-card { padding: 1.5rem !important; }
+          .tech-section { padding: 2rem 1rem !important; }
+          .tech-badge { padding: 0.7rem 1rem !important; font-size: 0.8rem !important; }
+        }
+      `}</style></style>
 
       {/* Ultra Premium Background Effects with Grid */}
       <div style={{
@@ -258,6 +272,14 @@ export default function Home() {
         position: 'relative',
         zIndex: 1
       }}>
+        <style jsx>{`
+          @media (max-width: 768px) {
+            main { padding: 0 1.5rem !important; }
+          }
+          @media (max-width: 480px) {
+            main { padding: 0 1rem !important; }
+          }
+        `}</style>
         <div style={{
           minHeight: '95vh',
           display: 'flex',
