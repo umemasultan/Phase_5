@@ -101,6 +101,51 @@ export default function Navbar({ darkMode, toggleDarkMode, currentUser, showAuth
         .premium-badge {
           animation: float 3s ease-in-out infinite;
         }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+          nav > div { padding: 0 60px !important; }
+          .nav-link { padding: 16px 28px !important; font-size: 15px !important; }
+        }
+
+        @media (max-width: 1024px) {
+          nav > div { padding: 0 40px !important; height: ${isHomePage ? '100px' : '75px'} !important; }
+          .logo-box { width: ${isHomePage ? '60px' : '48px'} !important; height: ${isHomePage ? '60px' : '48px'} !important; }
+          .logo-icon { font-size: ${isHomePage ? '36px' : '26px'} !important; }
+          .logo-title { font-size: ${isHomePage ? '32px' : '24px'} !important; }
+          .badge-text { font-size: ${isHomePage ? '11px' : '9px'} !important; }
+          .nav-link { padding: 14px 24px !important; font-size: 14px !important; }
+        }
+
+        @media (max-width: 768px) {
+          nav > div {
+            padding: 0 20px !important;
+            height: 70px !important;
+            flex-wrap: wrap !important;
+          }
+          .logo-box { width: 45px !important; height: 45px !important; border-radius: 14px !important; }
+          .logo-icon { font-size: 24px !important; }
+          .logo-title { font-size: 20px !important; letter-spacing: -1px !important; }
+          .logo-subtitle { display: none !important; }
+          .nav-links { display: none !important; }
+          .theme-toggle { width: 45px !important; height: 45px !important; font-size: 20px !important; }
+          .export-btn { padding: 12px 20px !important; font-size: 13px !important; height: 45px !important; }
+          .auth-btn { padding: 12px 28px !important; font-size: 14px !important; height: 48px !important; }
+          .logout-btn { padding: 12px 24px !important; font-size: 14px !important; height: 45px !important; }
+        }
+
+        @media (max-width: 480px) {
+          nav > div { padding: 0 15px !important; height: 65px !important; }
+          .logo-container { gap: 15px !important; }
+          .logo-box { width: 40px !important; height: 40px !important; border-radius: 12px !important; }
+          .logo-icon { font-size: 20px !important; }
+          .logo-title { font-size: 18px !important; }
+          .theme-toggle { width: 40px !important; height: 40px !important; font-size: 18px !important; }
+          .export-btn { padding: 10px 16px !important; font-size: 12px !important; height: 40px !important; gap: 6px !important; }
+          .export-btn span:first-child { font-size: 14px !important; }
+          .auth-btn { padding: 10px 24px !important; font-size: 13px !important; height: 42px !important; gap: 8px !important; }
+          .logout-btn { padding: 10px 20px !important; font-size: 13px !important; height: 40px !important; }
+        }
       `}</style>
 
       <nav style={{
@@ -165,7 +210,9 @@ export default function Navbar({ darkMode, toggleDarkMode, currentUser, showAuth
               transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
               animation: isHomePage && darkMode ? 'glow 3s ease-in-out infinite' : 'none',
               backgroundSize: '200% 200%'
-            }}>
+            }}
+            className="logo-box"
+            >
               <div style={{
                 position: 'absolute',
                 top: '-100%',
@@ -206,7 +253,9 @@ export default function Navbar({ darkMode, toggleDarkMode, currentUser, showAuth
                 zIndex: 1,
                 textShadow: '0 6px 24px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.5)',
                 lineHeight: '1'
-              }}>✓</span>
+              }}
+              className="logo-icon"
+              >✓</span>
             </div>
             <div style={{
               display: 'flex',
@@ -231,8 +280,10 @@ export default function Navbar({ darkMode, toggleDarkMode, currentUser, showAuth
                 filter: darkMode ? 'drop-shadow(0 0 30px rgba(99, 102, 241, 0.6))' : 'drop-shadow(0 2px 4px rgba(23, 21, 59, 0.1))',
                 backgroundSize: '200% 200%',
                 animation: darkMode && isHomePage ? 'gradient-shift 4s ease infinite' : 'none'
-              }}>TaskMaster Pro</h2>
-              <div className="premium-badge" style={{
+              }}
+              className="logo-title"
+              >TaskMaster Pro</h2>
+              <div className="premium-badge logo-subtitle" style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '12px'
@@ -256,18 +307,21 @@ export default function Navbar({ darkMode, toggleDarkMode, currentUser, showAuth
                   textTransform: 'uppercase',
                   lineHeight: '1',
                   textShadow: darkMode ? '0 0 20px rgba(99, 102, 241, 0.4)' : 'none'
-                }}>ENTERPRISE EDITION</p>
+                }}
+                className="badge-text"
+                >ENTERPRISE EDITION</p>
               </div>
             </div>
           </div>
 
           {/* Navigation Links & Actions */}
-          <div style={{
+          <div className="nav-actions" style={{
             display: 'flex',
             gap: '16px',
             alignItems: 'center'
           }}>
             {/* Navigation Links */}
+            <div className="nav-links" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
             {navLinks.map((link) => (
               <button
                 key={link.path}
@@ -325,12 +379,13 @@ export default function Navbar({ darkMode, toggleDarkMode, currentUser, showAuth
                 {link.label}
               </button>
             ))}
+            </div>
 
             {/* Export Button (only on tasks page) */}
             {showExportButton && (
               <button
                 onClick={onExportClick}
-                className="nav-link"
+                className="nav-link export-btn"
                 style={{
                   background: `linear-gradient(135deg, ${currentTheme.primary} 0%, ${currentTheme.accent} 100%)`,
                   color: 'white',
@@ -371,7 +426,7 @@ export default function Navbar({ darkMode, toggleDarkMode, currentUser, showAuth
             {/* Theme Toggle */}
             <button
               onClick={toggleDarkMode}
-              className="nav-link"
+              className="nav-link theme-toggle"
               style={{
                 background: darkMode
                   ? 'rgba(255, 255, 255, 0.1)'
@@ -416,7 +471,7 @@ export default function Navbar({ darkMode, toggleDarkMode, currentUser, showAuth
             {showAuthButtons && !currentUser && (
               <button
                 onClick={() => router.push('/login')}
-                className="nav-link"
+                className="nav-link auth-btn"
                 style={{
                   background: `linear-gradient(135deg, ${currentTheme.primary} 0%, ${currentTheme.accent} 100%)`,
                   color: 'white',
@@ -459,7 +514,7 @@ export default function Navbar({ darkMode, toggleDarkMode, currentUser, showAuth
             {currentUser && (
               <button
                 onClick={handleLogout}
-                className="nav-link"
+                className="nav-link logout-btn"
                 style={{
                   background: darkMode ? 'rgba(239, 68, 68, 0.2)' : 'rgba(239, 68, 68, 0.12)',
                   color: darkMode ? '#fca5a5' : '#dc2626',

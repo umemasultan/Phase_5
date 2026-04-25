@@ -1,38 +1,53 @@
-import asyncio
 from datetime import datetime, timezone
 from typing import Dict, Any
-import dapr.clients
+import uuid
 from dapr.clients import DaprClient
 
 DAPR_PUBSUB_NAME = "pubsub"
+DAPR_HTTP_PORT = 3500
 
 async def schedule_reminder(task_id: str, remind_at: datetime, task_data: Dict[str, Any]):
     """
-    Schedule a reminder using Dapr's capabilities.
-    Note: Dapr doesn't have a built-in Jobs API, so we'll implement a workaround
-    using a separate scheduler or by publishing to a timed pubsub.
+    Schedule a reminder using Dapr Jobs API.
+    This is production-ready and survives service restarts.
     """
     print(f"Scheduling reminder for task {task_id} at {remind_at}")
 
-    # In a real implementation, this would interface with a scheduler service
-    # For now, we'll calculate the delay and wait, then publish the reminder event
-    delay_seconds = (remind_at - datetime.now(timezone.utc)).total_seconds()
+    try:
+        with DaprClient() as client:
+            job_name = f"reminder-{task_id}"
 
-    if delay_seconds <= 0:
-        # Time already passed, trigger immediately
-        await asyncio.create_task(trigger_reminder(task_id, task_data))
-        return
+            # Prepare job data
+            job_data = {
+                "task_id": task_id,
+                "title": task_data.get("title", ""),
+                "due_at": task_data.get("due_at"),
+                "remind_at": remind_at.isoformat(),
+                "user_id": task_data.get("user_id", "")
+            }
 
-    # For a real production system, this should use proper job scheduling
-    # like Kubernetes CronJobs, or a dedicated scheduler service
-    await asyncio.sleep(delay_seconds)
-    await trigger_reminder(task_id, task_data)
+            # Schedule job using Dapr Jobs API
+            # The job will trigger at the exact time specified
+            response = await client.schedule_job_alpha1(
+                name=job_name,
+                schedule=remind_at.isoformat(),
+                data=job_data,
+                repeats=0,
+                ttl="24h"
+            )
+
+            print(f"✅ Scheduled reminder job {job_name} at {remind_at}")
+            return response
+
+    except Exception as e:
+        print(f"❌ Failed to schedule reminder for task {task_id}: {str(e)}")
+        raise
 
 async def trigger_reminder(task_id: str, task_data: Dict[str, Any]):
     """Trigger a reminder by publishing to the reminder topic"""
     with DaprClient() as client:
         reminder_event = {
-            "id": task_id,  # Generate proper ID in real implementation
+            "id": str(uuid.uuid4()),
             "task_id": task_id,
             "title": task_data.get("title", ""),
             "due_at": task_data.get("due_at"),

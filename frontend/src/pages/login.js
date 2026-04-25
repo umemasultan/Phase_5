@@ -94,6 +94,28 @@ export default function Login() {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
       </Head>
 
+      <style jsx>{`
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+          .login-card { max-width: 90% !important; padding: 40px 30px !important; }
+          .logo-box { width: 60px !important; height: 60px !important; font-size: 32px !important; }
+          h1 { font-size: 28px !important; }
+          .theme-toggle { top: 15px !important; right: 15px !important; padding: 10px 15px !important; font-size: 16px !important; }
+        }
+
+        @media (max-width: 480px) {
+          .login-card { max-width: 95% !important; padding: 35px 25px !important; border-radius: 20px !important; }
+          .logo-box { width: 55px !important; height: 55px !important; font-size: 28px !important; margin-bottom: 15px !important; }
+          h1 { font-size: 24px !important; margin-bottom: 8px !important; }
+          .subtitle { font-size: 14px !important; }
+          .form-label { font-size: 13px !important; }
+          .form-input { padding: 14px 18px !important; font-size: 15px !important; }
+          .submit-btn { padding: 16px !important; font-size: 15px !important; }
+          .signup-link { font-size: 13px !important; }
+          .theme-toggle { top: 12px !important; right: 12px !important; padding: 10px 14px !important; font-size: 16px !important; }
+        }
+      `}</style>
+
       {/* Background Elements */}
       <div style={{
         position: 'absolute',
@@ -108,7 +130,7 @@ export default function Login() {
       }} />
 
       {/* Dark Mode Toggle */}
-      <button onClick={toggleDarkMode} style={{
+      <button className="theme-toggle" onClick={toggleDarkMode} style={{
         position: 'absolute',
         top: '20px',
         right: '20px',
@@ -126,7 +148,7 @@ export default function Login() {
       </button>
 
       {/* Login Card */}
-      <div style={{
+      <div className="login-card" style={{
         background: currentTheme.cardBg,
         borderRadius: '24px',
         padding: '50px',
@@ -138,7 +160,7 @@ export default function Login() {
         zIndex: 1
       }}>
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-          <div style={{
+          <div className="logo-box" style={{
             width: '70px',
             height: '70px',
             background: `linear-gradient(135deg, ${currentTheme.primary} 0%, ${currentTheme.primaryLight} 100%)`,
@@ -159,7 +181,7 @@ export default function Login() {
             margin: '0 0 10px 0',
             letterSpacing: '-0.5px'
           }}>Welcome Back</h1>
-          <p style={{
+          <p className="subtitle" style={{
             color: darkMode ? '#ffffff' : '#6b7280',
             fontSize: '16px',
             margin: 0
@@ -183,7 +205,7 @@ export default function Login() {
 
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '20px' }}>
-            <label style={{
+            <label className="form-label" style={{
               display: 'block',
               color: darkMode ? '#ffffff' : currentTheme.text,
               fontSize: '14px',
@@ -194,6 +216,7 @@ export default function Login() {
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({...formData, email: e.target.value})}
+              className="form-input"
               style={{
                 width: '100%',
                 padding: '16px 20px',
@@ -211,7 +234,7 @@ export default function Login() {
           </div>
 
           <div style={{ marginBottom: '30px' }}>
-            <label style={{
+            <label className="form-label" style={{
               display: 'block',
               color: darkMode ? '#ffffff' : currentTheme.text,
               fontSize: '14px',
@@ -222,6 +245,7 @@ export default function Login() {
               type="password"
               value={formData.password}
               onChange={(e) => setFormData({...formData, password: e.target.value})}
+              className="form-input"
               style={{
                 width: '100%',
                 padding: '16px 20px',
@@ -240,6 +264,7 @@ export default function Login() {
 
           <button
             type="submit"
+            className="submit-btn"
             style={{
               width: '100%',
               background: `linear-gradient(135deg, ${currentTheme.primary} 0%, ${currentTheme.primaryLight} 100%)`,
@@ -259,7 +284,7 @@ export default function Login() {
           </button>
 
           <div style={{ textAlign: 'center' }}>
-            <p style={{
+            <p className="signup-link" style={{
               color: darkMode ? '#ffffff' : '#6b7280',
               fontSize: '14px',
               margin: 0

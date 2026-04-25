@@ -15,8 +15,10 @@ import {
   checkOverdueTasks
 } from '../utils/notifications';
 import { getSmartRecommendations } from '../utils/aiFeatures';
+import { useWebSocket } from '../contexts/WebSocketContext';
 
 export default function Analytics() {
+  const { lastMessage, isConnected } = useWebSocket();
   const router = useRouter();
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -46,6 +48,14 @@ export default function Analytics() {
       setNotificationsEnabled(true);
     }
   }, [router]);
+
+  // WebSocket real-time updates
+  useEffect(() => {
+    if (lastMessage && lastMessage.type === 'task_update') {
+      console.log('🔄 Real-time task update received:', lastMessage);
+      fetchTasks();
+    }
+  }, [lastMessage]);
 
   const theme = {
     dark: {
@@ -123,6 +133,61 @@ export default function Analytics() {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
       </Head>
 
+      <style jsx>{`
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+          main { padding: 2rem 0 !important; }
+          h1 { font-size: 2rem !important; }
+        }
+
+        @media (max-width: 768px) {
+          main { padding: 1.5rem 0 !important; }
+          h1 { font-size: 1.75rem !important; margin-bottom: 30px !important; }
+          .notification-banner { flex-direction: column !important; padding: 18px 25px !important; }
+          .notification-banner button { width: 100% !important; margin-top: 12px !important; }
+          .productivity-score { padding: 35px !important; }
+          .productivity-score h2 { font-size: 20px !important; }
+          .productivity-score .score { font-size: 2.5rem !important; }
+          .streak-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+          .streak-card { padding: 25px !important; }
+          .trends-card { padding: 1.5rem !important; }
+          .trends-card h2 { font-size: 1.5rem !important; }
+          .trend-bars { gap: 10px !important; }
+          .tag-stats { padding: 1.5rem !important; }
+          .tag-stats h2 { font-size: 1.5rem !important; }
+        }
+
+        @media (max-width: 480px) {
+          main { padding: 1rem 0 !important; }
+          h1 { font-size: 1.5rem !important; margin-bottom: 25px !important; }
+          .notification-banner { padding: 15px 20px !important; border-radius: 12px !important; }
+          .notification-banner h3 { font-size: 16px !important; }
+          .notification-banner p { font-size: 13px !important; }
+          .notification-banner button { padding: 10px 20px !important; font-size: 13px !important; }
+          .ai-recommendations { margin-bottom: 30px !important; }
+          .ai-recommendations h2 { font-size: 1.3rem !important; }
+          .recommendation-card { padding: 20px !important; }
+          .recommendation-card h3 { font-size: 16px !important; }
+          .recommendation-card p { font-size: 13px !important; }
+          .productivity-score { padding: 30px !important; margin-bottom: 30px !important; }
+          .productivity-score h2 { font-size: 18px !important; }
+          .productivity-score .score { font-size: 2rem !important; }
+          .productivity-score p { font-size: 14px !important; }
+          .streak-card { padding: 20px !important; }
+          .streak-card h3 { font-size: 18px !important; }
+          .streak-value { font-size: 2rem !important; }
+          .trends-card { padding: 1.25rem !important; margin-bottom: 30px !important; }
+          .trends-card h2 { font-size: 1.3rem !important; margin-bottom: 25px !important; }
+          .trend-bars { gap: 8px !important; }
+          .trend-bar { font-size: 11px !important; }
+          .tag-stats { padding: 1.25rem !important; }
+          .tag-stats h2 { font-size: 1.3rem !important; margin-bottom: 25px !important; }
+          .tag-item { padding: 12px !important; flex-direction: column !important; align-items: flex-start !important; }
+          .tag-info { margin-bottom: 10px !important; }
+          .tag-badge { padding: 5px 12px !important; font-size: 13px !important; }
+        }
+      `}</style>
+
       {/* Background */}
       <div style={{
         position: 'absolute',
@@ -156,7 +221,7 @@ export default function Analytics() {
 
           {/* Notification Banner */}
           {!notificationsEnabled && (
-            <div style={{
+            <div className="notification-banner" style={{
               background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
               color: 'white',
               padding: '20px 30px',
@@ -187,11 +252,11 @@ export default function Analytics() {
 
           {/* AI Recommendations */}
           {recommendations.length > 0 && (
-            <div style={{ marginBottom: '40px' }}>
+            <div className="ai-recommendations" style={{ marginBottom: '40px' }}>
               <h2 style={{ color: currentTheme.cardText, fontSize: '28px', fontWeight: '900', marginBottom: '20px' }}>🤖 AI Recommendations</h2>
               <div style={{ display: 'grid', gap: '15px' }}>
                 {recommendations.map((rec, index) => (
-                  <div key={index} style={{
+                  <div key={index} className="recommendation-card" style={{
                     background: currentTheme.cardBg,
                     borderRadius: '16px',
                     padding: '25px',
@@ -219,7 +284,7 @@ export default function Analytics() {
           )}
 
           {/* Productivity Score */}
-          <div style={{
+          <div className="productivity-score" style={{
             background: `linear-gradient(135deg, ${currentTheme.primary} 0%, ${currentTheme.primaryLight} 100%)`,
             borderRadius: '24px',
             padding: '50px',
@@ -237,7 +302,7 @@ export default function Analytics() {
               opacity: '0.1'
             }}>🎯</div>
             <h2 style={{ fontSize: '24px', fontWeight: '800', margin: '0 0 20px 0', position: 'relative', zIndex: 1 }}>Productivity Score</h2>
-            <div style={{ fontSize: '3rem', fontWeight: '900', margin: '0 0 10px 0', position: 'relative', zIndex: 1 }}>{productivityScore}%</div>
+            <div className="score" style={{ fontSize: '3rem', fontWeight: '900', margin: '0 0 10px 0', position: 'relative', zIndex: 1 }}>{productivityScore}%</div>
             <p style={{ fontSize: '16px', opacity: 0.9, margin: 0, position: 'relative', zIndex: 1 }}>
               {productivityScore >= 80 ? 'Excellent! Keep up the great work!' :
                productivityScore >= 60 ? 'Good progress! You\'re doing well.' :
@@ -246,9 +311,9 @@ export default function Analytics() {
           </div>
 
           {/* Streak & Upcoming */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px', marginBottom: '40px' }}>
+          <div className="streak-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px', marginBottom: '40px' }}>
             {/* Streak Card */}
-            <div style={{
+            <div className="streak-card" style={{
               background: currentTheme.cardBg,
               borderRadius: '20px',
               padding: '35px',
@@ -257,12 +322,12 @@ export default function Analytics() {
             }}>
               <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>🔥</div>
               <h3 style={{ color: currentTheme.cardText, fontSize: '20px', fontWeight: '800', margin: '0 0 10px 0' }}>Current Streak</h3>
-              <div style={{ fontSize: '2.5rem', fontWeight: '900', color: currentTheme.primary, margin: '10px 0' }}>{streakData.current}</div>
+              <div className="streak-value" style={{ fontSize: '2.5rem', fontWeight: '900', color: currentTheme.primary, margin: '10px 0' }}>{streakData.current}</div>
               <p style={{ color: darkMode ? '#ffffff' : '#6b7280', fontSize: '14px', margin: 0 }}>Longest: {streakData.longest} days</p>
             </div>
 
             {/* Upcoming Deadlines */}
-            <div style={{
+            <div className="streak-card" style={{
               background: currentTheme.cardBg,
               borderRadius: '20px',
               padding: '35px',
@@ -294,7 +359,7 @@ export default function Analytics() {
           </div>
 
           {/* Task Trends */}
-          <div style={{
+          <div className="trends-card" style={{
             background: currentTheme.cardBg,
             borderRadius: '20px',
             padding: '2rem',
@@ -303,9 +368,9 @@ export default function Analytics() {
             boxShadow: darkMode ? '0 15px 50px rgba(0,0,0,0.25)' : '0 10px 40px rgba(0,0,0,0.08)'
           }}>
             <h2 style={{ color: currentTheme.cardText, fontSize: '28px', fontWeight: '900', marginBottom: '30px' }}>📈 7-Day Trends</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '15px' }}>
+            <div className="trend-bars" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '15px' }}>
               {trends.map((day, index) => (
-                <div key={index} style={{ textAlign: 'center' }}>
+                <div key={index} className="trend-bar" style={{ textAlign: 'center' }}>
                   <div style={{
                     height: `${Math.max(day.created * 10, 20)}px`,
                     background: `linear-gradient(135deg, ${currentTheme.primary} 0%, ${currentTheme.primaryLight} 100%)`,
@@ -332,7 +397,7 @@ export default function Analytics() {
 
           {/* Tag Statistics */}
           {tagStats.length > 0 && (
-            <div style={{
+            <div className="tag-stats" style={{
               background: currentTheme.cardBg,
               borderRadius: '20px',
               padding: '2rem',
@@ -342,7 +407,7 @@ export default function Analytics() {
               <h2 style={{ color: currentTheme.cardText, fontSize: '28px', fontWeight: '900', marginBottom: '30px' }}>🏷️ Tag Statistics</h2>
               <div style={{ display: 'grid', gap: '15px' }}>
                 {tagStats.slice(0, 5).map((stat, index) => (
-                  <div key={index} style={{
+                  <div key={index} className="tag-item" style={{
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -350,13 +415,13 @@ export default function Analytics() {
                     background: darkMode ? 'rgba(255,255,255,0.05)' : '#f9fafb',
                     borderRadius: '12px'
                   }}>
-                    <div>
+                    <div className="tag-info">
                       <span style={{ color: currentTheme.cardText, fontSize: '16px', fontWeight: '700' }}>#{stat.tag}</span>
                       <span style={{ color: darkMode ? '#ffffff' : '#6b7280', fontSize: '14px', marginLeft: '10px' }}>
                         {stat.completed}/{stat.total} completed
                       </span>
                     </div>
-                    <div style={{
+                    <div className="tag-badge" style={{
                       background: stat.completionRate >= 80 ? currentTheme.primaryLight : stat.completionRate >= 50 ? currentTheme.primary : currentTheme.primary,
                       color: 'white',
                       padding: '6px 15px',

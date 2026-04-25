@@ -3,8 +3,10 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import taskApi from '../services/taskApi';
 import Navbar from '../components/Navbar';
+import { useWebSocket } from '../contexts/WebSocketContext';
 
 export default function Dashboard() {
+  const { lastMessage, isConnected } = useWebSocket();
   const router = useRouter();
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,6 +31,14 @@ export default function Dashboard() {
       setDarkMode(savedMode === 'true');
     }
   }, [router]);
+
+  // WebSocket real-time updates
+  useEffect(() => {
+    if (lastMessage && lastMessage.type === 'task_update') {
+      console.log('🔄 Real-time task update received:', lastMessage);
+      fetchTasks();
+    }
+  }, [lastMessage]);
 
   const toggleDarkMode = () => {
     const newMode = !darkMode;
@@ -149,6 +159,50 @@ export default function Dashboard() {
         .hover-scale:hover {
           transform: scale(1.02);
         }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+          main { padding: 2rem 0 !important; }
+          h1 { font-size: 2rem !important; }
+        }
+
+        @media (max-width: 768px) {
+          main { padding: 1.5rem 0 !important; }
+          h1 { font-size: 1.75rem !important; margin-bottom: 30px !important; }
+          .main-stats { grid-template-columns: repeat(2, 1fr) !important; gap: 20px !important; }
+          .stat-card { padding: 1.5rem !important; }
+          .stat-value { font-size: 2.5rem !important; }
+          .priority-breakdown { padding: 30px !important; }
+          .priority-breakdown h2 { font-size: 1.5rem !important; }
+          .priority-grid { grid-template-columns: 1fr !important; gap: 15px !important; }
+          .priority-card { padding: 25px !important; }
+          .recent-tasks { padding: 30px !important; }
+          .recent-tasks h2 { font-size: 1.5rem !important; }
+          .view-all-btn { padding: 12px 24px !important; font-size: 14px !important; }
+        }
+
+        @media (max-width: 480px) {
+          main { padding: 1rem 0 !important; }
+          h1 { font-size: 1.5rem !important; margin-bottom: 25px !important; }
+          .main-stats { grid-template-columns: 1fr !important; gap: 15px !important; }
+          .stat-card { padding: 1.25rem !important; }
+          .stat-icon { font-size: 80px !important; }
+          .stat-label { font-size: 14px !important; }
+          .stat-value { font-size: 2rem !important; }
+          .stat-desc { font-size: 13px !important; }
+          .priority-breakdown { padding: 25px !important; margin-bottom: 30px !important; }
+          .priority-breakdown h2 { font-size: 1.3rem !important; margin-bottom: 25px !important; }
+          .priority-card { padding: 20px !important; }
+          .priority-label { font-size: 13px !important; }
+          .priority-value { font-size: 2rem !important; }
+          .recent-tasks { padding: 25px !important; }
+          .recent-tasks h2 { font-size: 1.3rem !important; margin-bottom: 25px !important; }
+          .task-item { padding: 18px !important; flex-direction: column !important; align-items: flex-start !important; }
+          .task-info { margin-bottom: 12px !important; }
+          .task-title { font-size: 15px !important; }
+          .task-desc { font-size: 13px !important; }
+          .view-all-btn { width: 100% !important; padding: 12px 20px !important; font-size: 13px !important; }
+        }
       `}</style>
 
       <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} currentUser={currentUser} />
@@ -170,13 +224,13 @@ export default function Dashboard() {
         }}>📊 Analytics Dashboard</h1>
 
         {/* Main Stats Grid */}
-        <div style={{
+        <div className="main-stats" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
           gap: '30px',
           marginBottom: '50px'
         }}>
-          <div className="fade-in hover-scale" style={{
+          <div className="fade-in hover-scale stat-card" style={{
             background: `linear-gradient(135deg, ${currentTheme.primary} 0%, ${currentTheme.primaryLight} 100%)`,
             borderRadius: '24px',
             padding: '2rem',
@@ -186,19 +240,19 @@ export default function Dashboard() {
             overflow: 'hidden',
             animationDelay: '0.1s'
           }}>
-            <div style={{
+            <div className="stat-icon" style={{
               position: 'absolute',
               top: '-30px',
               right: '-30px',
               fontSize: '120px',
               opacity: '0.15'
             }}>📋</div>
-            <div style={{ fontSize: '16px', opacity: '0.9', marginBottom: '12px', fontWeight: '700', letterSpacing: '1px', position: 'relative', zIndex: 1 }}>TOTAL TASKS</div>
-            <div style={{ fontSize: '56px', fontWeight: '900', marginBottom: '12px', position: 'relative', zIndex: 1 }}>{stats.total}</div>
-            <div style={{ fontSize: '14px', opacity: '0.85', fontWeight: '600', position: 'relative', zIndex: 1 }}>All time tasks created</div>
+            <div className="stat-label" style={{ fontSize: '16px', opacity: '0.9', marginBottom: '12px', fontWeight: '700', letterSpacing: '1px', position: 'relative', zIndex: 1 }}>TOTAL TASKS</div>
+            <div className="stat-value" style={{ fontSize: '56px', fontWeight: '900', marginBottom: '12px', position: 'relative', zIndex: 1 }}>{stats.total}</div>
+            <div className="stat-desc" style={{ fontSize: '14px', opacity: '0.85', fontWeight: '600', position: 'relative', zIndex: 1 }}>All time tasks created</div>
           </div>
 
-          <div className="fade-in hover-scale" style={{
+          <div className="fade-in hover-scale stat-card" style={{
             background: currentTheme.cardBg,
             borderRadius: '24px',
             padding: '2rem',
@@ -208,19 +262,19 @@ export default function Dashboard() {
             overflow: 'hidden',
             animationDelay: '0.2s'
           }}>
-            <div style={{
+            <div className="stat-icon" style={{
               position: 'absolute',
               top: '-30px',
               right: '-30px',
               fontSize: '120px',
               opacity: '0.08'
             }}>✓</div>
-            <div style={{ fontSize: '16px', color: darkMode ? '#ffffff' : '#6b7280', marginBottom: '12px', fontWeight: '700', letterSpacing: '1px', position: 'relative', zIndex: 1 }}>COMPLETED</div>
-            <div style={{ fontSize: '56px', fontWeight: '900', color: '#10b981', marginBottom: '12px', position: 'relative', zIndex: 1 }}>{stats.completed}</div>
-            <div style={{ fontSize: '14px', color: darkMode ? '#ffffff' : '#6b7280', fontWeight: '600', position: 'relative', zIndex: 1 }}>Tasks finished</div>
+            <div className="stat-label" style={{ fontSize: '16px', color: darkMode ? '#ffffff' : '#6b7280', marginBottom: '12px', fontWeight: '700', letterSpacing: '1px', position: 'relative', zIndex: 1 }}>COMPLETED</div>
+            <div className="stat-value" style={{ fontSize: '56px', fontWeight: '900', color: '#10b981', marginBottom: '12px', position: 'relative', zIndex: 1 }}>{stats.completed}</div>
+            <div className="stat-desc" style={{ fontSize: '14px', color: darkMode ? '#ffffff' : '#6b7280', fontWeight: '600', position: 'relative', zIndex: 1 }}>Tasks finished</div>
           </div>
 
-          <div className="fade-in hover-scale" style={{
+          <div className="fade-in hover-scale stat-card" style={{
             background: currentTheme.cardBg,
             borderRadius: '24px',
             padding: '2rem',
@@ -230,19 +284,19 @@ export default function Dashboard() {
             overflow: 'hidden',
             animationDelay: '0.3s'
           }}>
-            <div style={{
+            <div className="stat-icon" style={{
               position: 'absolute',
               top: '-30px',
               right: '-30px',
               fontSize: '120px',
               opacity: '0.08'
             }}>⏳</div>
-            <div style={{ fontSize: '16px', color: darkMode ? '#ffffff' : '#6b7280', marginBottom: '12px', fontWeight: '700', letterSpacing: '1px', position: 'relative', zIndex: 1 }}>PENDING</div>
-            <div style={{ fontSize: '56px', fontWeight: '900', color: '#f59e0b', marginBottom: '12px', position: 'relative', zIndex: 1 }}>{stats.pending}</div>
-            <div style={{ fontSize: '14px', color: darkMode ? '#ffffff' : '#6b7280', fontWeight: '600', position: 'relative', zIndex: 1 }}>Tasks in progress</div>
+            <div className="stat-label" style={{ fontSize: '16px', color: darkMode ? '#ffffff' : '#6b7280', marginBottom: '12px', fontWeight: '700', letterSpacing: '1px', position: 'relative', zIndex: 1 }}>PENDING</div>
+            <div className="stat-value" style={{ fontSize: '56px', fontWeight: '900', color: '#f59e0b', marginBottom: '12px', position: 'relative', zIndex: 1 }}>{stats.pending}</div>
+            <div className="stat-desc" style={{ fontSize: '14px', color: darkMode ? '#ffffff' : '#6b7280', fontWeight: '600', position: 'relative', zIndex: 1 }}>Tasks in progress</div>
           </div>
 
-          <div className="fade-in hover-scale" style={{
+          <div className="fade-in hover-scale stat-card" style={{
             background: currentTheme.cardBg,
             borderRadius: '24px',
             padding: '2rem',
@@ -252,21 +306,21 @@ export default function Dashboard() {
             overflow: 'hidden',
             animationDelay: '0.4s'
           }}>
-            <div style={{
+            <div className="stat-icon" style={{
               position: 'absolute',
               top: '-30px',
               right: '-30px',
               fontSize: '120px',
               opacity: '0.08'
             }}>📈</div>
-            <div style={{ fontSize: '16px', color: darkMode ? '#ffffff' : '#6b7280', marginBottom: '12px', fontWeight: '700', letterSpacing: '1px', position: 'relative', zIndex: 1 }}>COMPLETION RATE</div>
-            <div style={{ fontSize: '56px', fontWeight: '900', color: currentTheme.primary, marginBottom: '12px', position: 'relative', zIndex: 1 }}>{stats.completionRate}%</div>
-            <div style={{ fontSize: '14px', color: darkMode ? '#ffffff' : '#6b7280', fontWeight: '600', position: 'relative', zIndex: 1 }}>Overall progress</div>
+            <div className="stat-label" style={{ fontSize: '16px', color: darkMode ? '#ffffff' : '#6b7280', marginBottom: '12px', fontWeight: '700', letterSpacing: '1px', position: 'relative', zIndex: 1 }}>COMPLETION RATE</div>
+            <div className="stat-value" style={{ fontSize: '56px', fontWeight: '900', color: currentTheme.primary, marginBottom: '12px', position: 'relative', zIndex: 1 }}>{stats.completionRate}%</div>
+            <div className="stat-desc" style={{ fontSize: '14px', color: darkMode ? '#ffffff' : '#6b7280', fontWeight: '600', position: 'relative', zIndex: 1 }}>Overall progress</div>
           </div>
         </div>
 
         {/* Priority Breakdown */}
-        <div className="fade-in" style={{
+        <div className="fade-in priority-breakdown" style={{
           background: currentTheme.cardBg,
           borderRadius: '24px',
           padding: '45px',
@@ -276,42 +330,42 @@ export default function Dashboard() {
           animationDelay: '0.5s'
         }}>
           <h2 style={{ margin: '0 0 35px 0', fontSize: '30px', fontWeight: '900', color: currentTheme.cardText, letterSpacing: '-0.5px' }}>Priority Breakdown</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '25px' }}>
-            <div className="hover-scale" style={{
+          <div className="priority-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '25px' }}>
+            <div className="hover-scale priority-card" style={{
               background: 'linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)',
               borderRadius: '20px',
               padding: '35px',
               borderLeft: '6px solid #ef4444',
               boxShadow: '0 8px 25px rgba(239, 68, 68, 0.15)'
             }}>
-              <div style={{ fontSize: '15px', color: '#991b1b', fontWeight: '800', marginBottom: '12px', letterSpacing: '1px' }}>HIGH PRIORITY</div>
-              <div style={{ fontSize: '2.5rem', fontWeight: '900', color: '#ef4444' }}>{stats.high}</div>
+              <div className="priority-label" style={{ fontSize: '15px', color: '#991b1b', fontWeight: '800', marginBottom: '12px', letterSpacing: '1px' }}>HIGH PRIORITY</div>
+              <div className="priority-value" style={{ fontSize: '2.5rem', fontWeight: '900', color: '#ef4444' }}>{stats.high}</div>
             </div>
-            <div className="hover-scale" style={{
+            <div className="hover-scale priority-card" style={{
               background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
               borderRadius: '20px',
               padding: '35px',
               borderLeft: '6px solid #f59e0b',
               boxShadow: '0 8px 25px rgba(245, 158, 11, 0.15)'
             }}>
-              <div style={{ fontSize: '15px', color: '#92400e', fontWeight: '800', marginBottom: '12px', letterSpacing: '1px' }}>MEDIUM PRIORITY</div>
-              <div style={{ fontSize: '2.5rem', fontWeight: '900', color: '#f59e0b' }}>{stats.medium}</div>
+              <div className="priority-label" style={{ fontSize: '15px', color: '#92400e', fontWeight: '800', marginBottom: '12px', letterSpacing: '1px' }}>MEDIUM PRIORITY</div>
+              <div className="priority-value" style={{ fontSize: '2.5rem', fontWeight: '900', color: '#f59e0b' }}>{stats.medium}</div>
             </div>
-            <div className="hover-scale" style={{
+            <div className="hover-scale priority-card" style={{
               background: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)',
               borderRadius: '20px',
               padding: '35px',
               borderLeft: '6px solid #10b981',
               boxShadow: '0 8px 25px rgba(16, 185, 129, 0.15)'
             }}>
-              <div style={{ fontSize: '15px', color: '#065f46', fontWeight: '800', marginBottom: '12px', letterSpacing: '1px' }}>LOW PRIORITY</div>
-              <div style={{ fontSize: '2.5rem', fontWeight: '900', color: '#10b981' }}>{stats.low}</div>
+              <div className="priority-label" style={{ fontSize: '15px', color: '#065f46', fontWeight: '800', marginBottom: '12px', letterSpacing: '1px' }}>LOW PRIORITY</div>
+              <div className="priority-value" style={{ fontSize: '2.5rem', fontWeight: '900', color: '#10b981' }}>{stats.low}</div>
             </div>
           </div>
         </div>
 
         {/* Recent Tasks */}
-        <div className="fade-in" style={{
+        <div className="fade-in recent-tasks" style={{
           background: currentTheme.cardBg,
           borderRadius: '24px',
           padding: '45px',
@@ -319,9 +373,9 @@ export default function Dashboard() {
           border: darkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(33, 15, 55, 0.08)',
           animationDelay: '0.6s'
         }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '35px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '35px', flexWrap: 'wrap', gap: '15px' }}>
             <h2 style={{ margin: 0, fontSize: '30px', fontWeight: '900', color: currentTheme.cardText, letterSpacing: '-0.5px' }}>Recent Tasks</h2>
-            <button onClick={() => router.push('/tasks')} style={{
+            <button className="view-all-btn" onClick={() => router.push('/tasks')} style={{
               background: `linear-gradient(135deg, ${currentTheme.primary} 0%, ${currentTheme.primaryLight} 100%)`,
               color: 'white',
               border: 'none',
@@ -342,7 +396,7 @@ export default function Dashboard() {
               {recentTasks.map((task, index) => (
                 <div
                   key={task.id}
-                  className="hover-scale"
+                  className="hover-scale task-item"
                   style={{
                     padding: '25px',
                     borderRadius: '16px',
@@ -354,7 +408,7 @@ export default function Dashboard() {
                     transition: 'all 0.3s'
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '18px', flex: 1 }}>
+                  <div className="task-info" style={{ display: 'flex', alignItems: 'center', gap: '18px', flex: 1 }}>
                     <input
                       type="checkbox"
                       checked={task.completed}
@@ -362,7 +416,7 @@ export default function Dashboard() {
                       style={{ width: '24px', height: '24px', accentColor: currentTheme.primary, cursor: 'pointer' }}
                     />
                     <div style={{ flex: 1 }}>
-                      <div style={{
+                      <div className="task-title" style={{
                         fontSize: '17px',
                         fontWeight: '700',
                         color: currentTheme.cardText,
@@ -370,7 +424,7 @@ export default function Dashboard() {
                         marginBottom: '6px'
                       }}>{task.title}</div>
                       {task.description && (
-                        <div style={{ fontSize: '14px', color: darkMode ? '#ffffff' : '#6b7280', fontWeight: '500' }}>
+                        <div className="task-desc" style={{ fontSize: '14px', color: darkMode ? '#ffffff' : '#6b7280', fontWeight: '500' }}>
                           {task.description.substring(0, 70)}{task.description.length > 70 ? '...' : ''}
                         </div>
                       )}

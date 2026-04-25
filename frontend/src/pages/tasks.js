@@ -319,6 +319,40 @@ export default function Tasks() {
         .hover-scale:hover {
           transform: scale(1.02);
         }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+          main { padding: 2rem 0 !important; }
+        }
+
+        @media (max-width: 768px) {
+          main { padding: 1.5rem 0 !important; }
+          .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 15px !important; }
+          .action-bar { padding: 25px !important; }
+          .action-bar h2 { font-size: 1.4rem !important; }
+          .filters { flex-direction: column !important; }
+          .filters input, .filters select { width: 100% !important; min-width: 100% !important; }
+          .view-toggle { width: 100% !important; justify-content: center !important; }
+          .cta-buttons { flex-direction: column !important; width: 100% !important; }
+          .cta-buttons button { width: 100% !important; }
+          .task-card { padding: 1.25rem !important; }
+          .task-content { flex-direction: column !important; align-items: flex-start !important; }
+          .task-actions { margin-top: 15px !important; width: 100% !important; justify-content: space-between !important; }
+        }
+
+        @media (max-width: 480px) {
+          .stats-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+          .stat-card { padding: 1.25rem !important; }
+          .stat-value { font-size: 1.75rem !important; }
+          .action-bar { padding: 20px !important; }
+          .action-bar h2 { font-size: 1.2rem !important; }
+          .filters input, .filters select { padding: 14px 18px !important; font-size: 14px !important; }
+          .create-form { padding: 25px !important; }
+          .create-form input, .create-form textarea, .create-form select { padding: 14px 18px !important; font-size: 14px !important; }
+          .task-card { padding: 1rem !important; }
+          .task-title { font-size: 18px !important; }
+          .priority-badge { padding: 8px 18px !important; font-size: 12px !important; }
+        }
       `}</style>
 
       <Navbar
@@ -415,7 +449,7 @@ export default function Tasks() {
       }}>
         <div style={{ padding: '0 1.5rem' }}>
         {/* Stats Cards */}
-        <div style={{
+        <div className="stats-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
           gap: '25px',
@@ -427,7 +461,7 @@ export default function Tasks() {
             { label: 'PENDING', value: stats.pending, color: '#f59e0b', icon: '⏳' },
             { label: 'HIGH PRIORITY', value: stats.high, color: '#ef4444', icon: '🔥' }
           ].map((stat, index) => (
-            <div key={index} className="hover-scale" style={{
+            <div key={index} className="hover-scale stat-card" style={{
               background: currentTheme.cardBg,
               borderRadius: '20px',
               padding: '1.5rem',
@@ -444,13 +478,13 @@ export default function Tasks() {
                 opacity: '0.1'
               }}>{stat.icon}</div>
               <div style={{ fontSize: '13px', color: darkMode ? '#ffffff' : '#6b7280', fontWeight: '700', marginBottom: '12px', letterSpacing: '1px' }}>{stat.label}</div>
-              <div style={{ fontSize: '2rem', fontWeight: '900', color: stat.color, position: 'relative', zIndex: 1 }}>{stat.value}</div>
+              <div className="stat-value" style={{ fontSize: '2rem', fontWeight: '900', color: stat.color, position: 'relative', zIndex: 1 }}>{stat.value}</div>
             </div>
           ))}
         </div>
 
         {/* Action Bar */}
-        <div style={{
+        <div className="action-bar" style={{
           background: currentTheme.cardBg,
           borderRadius: '20px',
           padding: '35px',
@@ -460,8 +494,8 @@ export default function Tasks() {
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px', marginBottom: '25px' }}>
             <h2 style={{ margin: 0, fontSize: '1.75rem', fontWeight: '900', color: currentTheme.cardText, letterSpacing: '-0.5px' }}>My Tasks</h2>
-            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-              <div style={{ display: 'flex', background: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(23,21,59,0.08)', borderRadius: '12px', padding: '4px' }}>
+            <div className="cta-buttons" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+              <div className="view-toggle" style={{ display: 'flex', background: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(23,21,59,0.08)', borderRadius: '12px', padding: '4px' }}>
                 <button onClick={() => setViewMode('list')} style={{
                   background: viewMode === 'list' ? `linear-gradient(135deg, ${currentTheme.primary} 0%, ${currentTheme.primaryLight} 100%)` : 'transparent',
                   color: viewMode === 'list' ? 'white' : currentTheme.text,
@@ -508,7 +542,7 @@ export default function Tasks() {
           </div>
 
           {/* Filters */}
-          <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+          <div className="filters" style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
             <input
               type="text"
               placeholder="🔍 Search tasks..."
@@ -574,7 +608,7 @@ export default function Tasks() {
 
         {/* Create Task Form */}
         {showCreateForm && (
-          <div className="slide-in" style={{
+          <div className="slide-in create-form" style={{
             background: currentTheme.cardBg,
             borderRadius: '20px',
             padding: '40px',
@@ -831,7 +865,7 @@ export default function Tasks() {
             filteredTasks.map((task, index) => (
               <div
                 key={task.id}
-                className="hover-scale"
+                className="hover-scale task-card"
                 style={{
                   background: currentTheme.cardBg,
                   borderRadius: '20px',
@@ -845,7 +879,7 @@ export default function Tasks() {
                   opacity: 0
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '25px' }}>
+                <div className="task-content" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '25px' }}>
                   <div style={{ flex: 1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '18px', marginBottom: '15px' }}>
                       <input
@@ -859,7 +893,7 @@ export default function Tasks() {
                           accentColor: currentTheme.primary
                         }}
                       />
-                      <h3 style={{
+                      <h3 className="task-title" style={{
                         margin: 0,
                         fontSize: '22px',
                         fontWeight: '800',
@@ -896,8 +930,9 @@ export default function Tasks() {
                       ))}
                     </div>
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '12px' }}>
+                  <div className="task-actions" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '12px' }}>
                     <span
+                      className="priority-badge"
                       style={{
                         background: priorityColors[task.priority].bg,
                         color: 'white',

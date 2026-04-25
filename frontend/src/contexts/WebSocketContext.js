@@ -8,18 +8,25 @@ export function WebSocketProvider({ children }) {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
+    // Determine WebSocket URL based on environment
+    const wsUrl = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8004/ws';
+
     // Connect to WebSocket service
-    const websocket = new WebSocket('ws://localhost:8004/ws');
+    const websocket = new WebSocket(wsUrl);
 
     websocket.onopen = () => {
-      console.log('✅ WebSocket connected');
+      console.log('✅ WebSocket connected to', wsUrl);
       setIsConnected(true);
     };
 
     websocket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.log('📨 WebSocket message:', data);
-      setLastMessage(data);
+      try {
+        const data = JSON.parse(event.data);
+        console.log('📨 WebSocket message:', data);
+        setLastMessage(data);
+      } catch (error) {
+        console.error('❌ Failed to parse WebSocket message:', error);
+      }
     };
 
     websocket.onerror = (error) => {
@@ -30,6 +37,12 @@ export function WebSocketProvider({ children }) {
     websocket.onclose = () => {
       console.log('🔌 WebSocket disconnected');
       setIsConnected(false);
+
+      // Attempt to reconnect after 5 seconds
+      setTimeout(() => {
+        console.log('🔄 Attempting to reconnect WebSocket...');
+        window.location.reload();
+      }, 5000);
     };
 
     setWs(websocket);
